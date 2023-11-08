@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="홈"/>
+
+    <item
+        android:id="@+id/tab_find"
+        android:enabled="true"
+        android:icon="@drawable/ic_find"
+        android:title="찾아가세요"/>
+
+    <item
+        android:id="@+id/tab_look_for"
+        android:enabled="true"
+        android:icon="@drawable/ic_look_for"
+        android:title="찾아요"/>
+
+    <item
+        android:id="@+id/tab_my_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_my_page"
+        android:title="마이페이지"/>
+
+
+
+
+</menu>
