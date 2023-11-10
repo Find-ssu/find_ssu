@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "687171495005",
+    "project_id": "findssu-f23d6",
+    "storage_bucket": "findssu-f23d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687171495005:android:0d51babf5032bcf31419b4",
+        "android_client_info": {
+          "package_name": "com.example.find_ssu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjfoX_iIlujTVDqc_0VqfjwLTJctykXoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
