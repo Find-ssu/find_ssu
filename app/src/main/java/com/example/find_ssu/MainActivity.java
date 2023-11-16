@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         setFragment(TAG_HOME, new HomeFragment());
         binding.navigationView.setSelectedItemId(R.id.home_navi);
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
+
 
     protected void setFragment(String tag, Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

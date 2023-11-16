@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextView MembershipButton=binding.membershipTv;
+        TextView MembershipButton=binding.loginMembershipTv;
         MembershipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
