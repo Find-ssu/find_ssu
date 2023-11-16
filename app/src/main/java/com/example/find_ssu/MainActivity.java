@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.find_ssu.databinding.ActivityMainBinding;
 
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_FIND = "FindFragment";
 
     private ActivityMainBinding binding;
+
+    Button myButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
 
     protected void setFragment(String tag, Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
