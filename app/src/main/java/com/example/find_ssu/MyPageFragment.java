@@ -30,7 +30,6 @@ public class MyPageFragment extends Fragment {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 로그아웃 버튼을 클릭하면 LoginActivity로 이동
                 Intent intent = new Intent(requireContext(), LoginActivity.class);
                 startActivity(intent);
                 requireActivity().getSupportFragmentManager().beginTransaction().remove(MyPageFragment.this).commit();
