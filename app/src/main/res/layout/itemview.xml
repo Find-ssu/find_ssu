@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/item_view_fl"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/item_iv"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/item_null"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/item_frame_iv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/item_frame"
+            android:scaleType="fitCenter"
+            />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/item_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dummy data"
+        android:fontFamily="@font/pretendard_regular"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/item_view_fl"
+        app:layout_constraintTop_toTopOf="@id/item_view_fl"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:id="@+id/item_data_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="습득일자 : "
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/item_name_tv"
+        app:layout_constraintTop_toBottomOf="@id/item_name_tv"
+        android:textSize="10dp"
+        android:fontFamily="@font/pretendard_thin"
+        android:textColor="#CC000000"
+        />
+
+    <TextView
+        android:id="@+id/item_date_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2003/04/07"
+        app:layout_constraintStart_toEndOf="@id/item_data_tv"
+        app:layout_constraintTop_toTopOf="@id/item_data_tv"
+        android:textSize="10dp"
+        android:fontFamily="@font/pretendard_thin"
+        android:textColor="#CC000000"
+        />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="370dp"
+        android:layout_height="1dp"
+        android:background="#9AA5B1"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_view_fl" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

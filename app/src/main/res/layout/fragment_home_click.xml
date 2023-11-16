@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeClickFragment">
+
+    <ImageView
+        android:id="@+id/home_click_back_iv"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/back_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="45dp"
+        />
+
+    <TextView
+        android:id="@+id/home_click_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분실물 센터 물품보관"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/pretendard_extra_bold"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        />
+
+    <ImageView
+        android:id="@+id/home_click_warning_iv"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:src="@drawable/warning_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_click_title_tv"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/home_click_serial_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="물품 일련번호 : "
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/home_click_back_iv"
+        app:layout_constraintTop_toBottomOf="@id/home_click_warning_iv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_serial_num_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2023-553"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/home_click_serial_num_tv"
+        app:layout_constraintTop_toTopOf="@id/home_click_serial_num_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_feature_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="물품 특징 : "
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toStartOf="@id/home_click_serial_num_tv"
+        app:layout_constraintTop_toBottomOf="@id/home_click_serial_num_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_feature_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="토끼 인형 파우치"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/home_click_feature_tv"
+        app:layout_constraintTop_toTopOf="@id/home_click_feature_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="습득 일자 : "
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/home_click_feature_tv"
+        app:layout_constraintTop_toBottomOf="@id/home_click_feature_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_date_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2023/10/23"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/home_click_date_tv"
+        app:layout_constraintTop_toTopOf="@id/home_click_date_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_location_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="습득 장소 : "
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/home_click_date_tv"
+        app:layout_constraintTop_toBottomOf="@id/home_click_date_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_location_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="불명"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/home_click_location_tv"
+        app:layout_constraintTop_toTopOf="@id/home_click_location_tv"
+        />
+
+    <ImageView
+        android:id="@+id/home_click_link_iv"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_link"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/home_click_location_tv"
+        app:layout_constraintTop_toBottomOf="@id/home_click_location_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_click_instagram_link_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        app:layout_constraintStart_toEndOf="@id/home_click_link_iv"
+        app:layout_constraintTop_toTopOf="@id/home_click_link_iv"
+        android:textColor="@color/blue"
+        android:text="인스타 본문 링크"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="15sp"
+        />
+
+    <FrameLayout
+        android:id="@+id/home_click_fl"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_click_instagram_link_tv"
+        >
+
+        <ImageView
+            android:id="@+id/home_click_iv"
+            android:layout_width="330dp"
+            android:layout_height="230dp"
+            android:src="@drawable/item_null_big"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:id="@+id/home_click_frame_iv"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:src="@drawable/item_frame_big"
+            />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/home_way_iv"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:src="@drawable/way_tv"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_click_fl"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -62,4 +62,5 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
     // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation("com.google.android.material:material:1.1.0-beta01")
 }

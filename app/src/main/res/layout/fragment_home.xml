@@ -1,13 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_const_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="home_fragment_test" />
+        android:layout_height="220dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/home_title_iv"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/fragment_title"/>
+
+        <TextView
+            android:id="@+id/home_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분실문 센터 물품보관"
+            android:textColor="@color/blue"
+            android:fontFamily="@font/pretendard_extra_bold"
+            android:textSize="25sp"
+            app:layout_constraintTop_toBottomOf="@id/home_title_iv"
+            app:layout_constraintStart_toStartOf="@id/home_title_iv"
+            />
+
+        <EditText
+            android:id="@+id/home_search_word_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:drawablePadding="5dp"
+            android:hint="검색어를 입력하세요"
+            android:textColorHint="#CCCCCC"
+            android:fontFamily="@font/pretendard_medium"
+            android:textSize="17sp"
+            android:drawableEnd="@drawable/ic_search_size"
+            app:layout_constraintTop_toBottomOf="@id/home_title_tv"
+            android:background="@drawable/edit_round"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/home_const_top"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

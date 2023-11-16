@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LookForClickFragment">
+
+    <ImageView
+        android:id="@+id/look_for_click_back_iv"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/back_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="45dp"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="찾아요"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/pretendard_extra_bold"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        />
+
+    <ImageView
+        android:id="@+id/look_for_click_warning_iv"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:src="@drawable/warning_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/look_for_click_title_tv"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="물품명 : "
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/look_for_click_back_iv"
+        app:layout_constraintTop_toBottomOf="@id/look_for_click_warning_iv"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_name_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="에어팟 프로"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/look_for_click_name_tv"
+        app:layout_constraintTop_toTopOf="@id/look_for_click_name_tv"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_location_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분실장소 : "
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toStartOf="@id/look_for_click_name_tv"
+        app:layout_constraintTop_toBottomOf="@id/look_for_click_name_tv"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_location_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정보과학관"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/look_for_click_location_tv"
+        app:layout_constraintTop_toTopOf="@id/look_for_click_location_tv"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분실일자 : "
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/look_for_click_location_tv"
+        app:layout_constraintTop_toBottomOf="@id/look_for_click_location_tv"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_date_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2023/10/23"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/look_for_click_date_tv"
+        app:layout_constraintTop_toTopOf="@id/look_for_click_date_tv"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_more_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="세부사항 : "
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/look_for_click_date_tv"
+        app:layout_constraintTop_toBottomOf="@id/look_for_click_date_tv"
+        />
+
+    <TextView
+        android:id="@+id/look_for_click_more_input_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="에어팟 벽면에 스크래치 있습니다."
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        app:layout_constraintStart_toEndOf="@id/look_for_click_more_tv"
+        app:layout_constraintTop_toTopOf="@id/look_for_click_more_tv"
+        />
+
+
+
+    <FrameLayout
+        android:id="@+id/look_for_click_fl"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/look_for_click_more_tv"
+        >
+
+        <ImageView
+            android:id="@+id/look_for_click_iv"
+            android:layout_width="330dp"
+            android:layout_height="230dp"
+            android:src="@drawable/item_null_big"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:id="@+id/look_for_click_frame_iv"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:src="@drawable/item_frame_big"
+            />
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/look_for_way_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/look_for_click_fl"
+        >
+
+        <TextView
+            android:id="@+id/look_for_way_tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분실물 센터는"
+            android:textSize="12sp"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="#80000000"
+            />
+
+        <TextView
+            android:id="@+id/look_for_way_tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="숭실대학교 학생회관 206호"
+            android:textSize="12sp"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="@color/blue"
+            />
+
+        <TextView
+            android:id="@+id/look_for_way_tv_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="에 위치해 있습니다."
+            android:textSize="12sp"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="#80000000"
+            />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
