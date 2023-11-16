@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/dialog_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재작성중인 글이 삭제됩니다."
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/dialog_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="글 잘성을 그만두시겠습니까?"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/dialog_text1"
+        app:layout_constraintTop_toBottomOf="@id/dialog_text1"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/dialog_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소"
+        android:background="#00FFFFFF"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="16sp"
+        android:layout_marginStart="140dp"
+        app:layout_constraintStart_toStartOf="@id/dialog_text2"
+        app:layout_constraintTop_toBottomOf="@id/dialog_text2"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/dialog_okay_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:background="#00FFFFFF"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/dialog_cancel_btn"
+        app:layout_constraintTop_toTopOf="@id/dialog_cancel_btn"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
