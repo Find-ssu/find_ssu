@@ -42,8 +42,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                if(!email.isEmpty()&&!password.isEmpty()){
+                    signIn(email, password);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "이메일과 비밀번호를 모두 입력하세요",
+                            Toast.LENGTH_SHORT).show();
+                }
 
-                signIn(email, password);
+
             }
         });
 
@@ -64,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
     }
+
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -93,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
 
 
 }

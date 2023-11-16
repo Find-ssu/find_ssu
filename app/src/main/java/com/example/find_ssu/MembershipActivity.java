@@ -31,14 +31,27 @@ public class MembershipActivity extends AppCompatActivity {
         initFirebaseAuth();
         EditText emailEditText = binding.membershipEmailEt;
         EditText passwordEditText = binding.membershipPasswordEt;
+        EditText passwordcheckEditText = binding.membershipPasswordCheckEt;
         Button signUpButton = binding.membershipBtn;
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                String passwordcheck=passwordcheckEditText.getText().toString();
+                if(!email.isEmpty()&&!password.isEmpty()&&!passwordcheck.isEmpty()){
+                    if(password.equals(passwordcheck)){
+                        signUp(email, password);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "비밀번호가 일치하지않습니다.", Toast.LENGTH_LONG).show();
+                    }
+                }
 
-                signUp(email, password);
+                else{
+                    Toast.makeText(getApplicationContext(), "이메일과 비밀번호를 모두 입력하세요",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
