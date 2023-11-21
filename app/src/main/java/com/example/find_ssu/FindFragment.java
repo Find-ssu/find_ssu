@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class FindFragment extends Fragment {
+    private static final String TAG = "FINDSSU";
 
     private FloatingActionButton findFab;
 
@@ -39,7 +41,6 @@ public class FindFragment extends Fragment {
                 fragmentTransaction.replace(R.id.fragment_find, findFabClickFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
                 findFab.setVisibility(View.GONE);
             }
         });
