@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "FINDSSU";
 
     ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
