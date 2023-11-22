@@ -1,11 +1,8 @@
 package com.example.find_ssu;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,18 +15,17 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
-public class FindFabClickFragment extends Fragment {
+
+public class LookForFabClickFragment extends Fragment {
 
     private Spinner locationSpinner;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_find_fab_click, container, false);
-        ImageButton findFabClickBackButton = view.findViewById(R.id.find_fab_click_back_iv);
+        View view = inflater.inflate(R.layout.fragment_look_for_fab_click, container, false);
+        ImageButton lookForFabClickBackButton = view.findViewById(R.id.look_for_fab_click_back_iv);
 
-
-        findFabClickBackButton.setOnClickListener(new View.OnClickListener() {
+        lookForFabClickBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // AlertDialog.Builder를 사용하여 다이얼로그 생성
@@ -59,12 +55,12 @@ public class FindFabClickFragment extends Fragment {
                         dialog.dismiss();
 
                         // 화면 전환을 위한 Fragment 객체 생성
-                        Fragment findFragment = new FindFragment();
+                        Fragment lookForFragment = new LookForFragment();
 
                         // Fragment 전환
                         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_find, findFragment);
+                        fragmentTransaction.replace(R.id.fragment_look_for, lookForFragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                     }
@@ -76,7 +72,7 @@ public class FindFabClickFragment extends Fragment {
         });
 
         // 스피너와 array 연결
-        locationSpinner = view.findViewById(R.id.find_fab_click_location_sp);
+        locationSpinner = view.findViewById(R.id.look_for_fab_click_location_sp);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.location_spinner_array,
@@ -88,10 +84,9 @@ public class FindFabClickFragment extends Fragment {
         return view;
 
     }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 }
