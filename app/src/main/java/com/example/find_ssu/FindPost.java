@@ -1,5 +1,7 @@
 package com.example.find_ssu;
 
+import android.net.Uri;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.ServerTimestamp;
 
