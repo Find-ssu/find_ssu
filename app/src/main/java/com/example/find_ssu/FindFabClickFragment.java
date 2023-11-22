@@ -153,7 +153,10 @@ public class FindFabClickFragment extends Fragment {
         String location_detail = binding.findFabClickLocationDetailEt.getText().toString();
         String date = binding.findFabClickDateEt.getText().toString();
         String more = binding.findFabClickMoreEt.getText().toString();
-        String Image=image.toString();
+        String Image=null;
+        if(image!=null)
+            Image=image.toString();
+
         String uid = getUidOfCurrentUser();
         String DocumentId =uid + "_" + System.currentTimeMillis();
         //사용자 입력 값으로 FindPost객체 생성

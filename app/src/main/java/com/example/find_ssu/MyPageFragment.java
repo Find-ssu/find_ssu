@@ -27,6 +27,7 @@ public class MyPageFragment extends Fragment {
     private static final String TAG = "FINDSSU";
 
     private TextView my_page_logout_tv;
+    private TextView my_page_email_tv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class MyPageFragment extends Fragment {
                 //requireActivity().getSupportFragmentManager().beginTransaction().remove(MyPageFragment.this).commit();
             }
         });
+        TextView EmailView=view.findViewById(R.id.my_page_email_tv);
 
         return view;
     }
