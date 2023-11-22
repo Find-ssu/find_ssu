@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MembershipActivity extends AppCompatActivity {
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "FINDSSU";
     ActivityMembershipBinding binding;
     private FirebaseAuth mAuth;
 
@@ -28,18 +28,23 @@ public class MembershipActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityMembershipBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         initFirebaseAuth();
+
         EditText emailEditText = binding.membershipEmailEt;
         EditText passwordEditText = binding.membershipPasswordEt;
         EditText passwordcheckEditText = binding.membershipPasswordCheckEt;
         Button signUpButton = binding.membershipBtn;
+        //회원가입버튼 클릭이벤트
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String passwordcheck=passwordcheckEditText.getText().toString();
+                //1차로 email,password,passwordcheck가 비었는지 확인
                 if(!email.isEmpty()&&!password.isEmpty()&&!passwordcheck.isEmpty()){
+                    //2차로 password와 passwordcheck의 일치여부 확인
                     if(password.equals(passwordcheck)){
                         signUp(email, password);
                     }
@@ -59,6 +64,7 @@ public class MembershipActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
     }
+    //파이어베이스 회원가입
     private void signUp(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
