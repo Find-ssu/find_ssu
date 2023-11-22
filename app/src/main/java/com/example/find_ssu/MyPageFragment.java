@@ -44,6 +44,11 @@ public class MyPageFragment extends Fragment {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(requireContext(), LoginActivity.class);
+                startActivity(intent);
+                requireActivity().getSupportFragmentManager().beginTransaction().remove(MyPageFragment.this).commit();
+
                 //파이어베이스 로그아웃
                 signOut();
                 getActivity().finish();
@@ -52,6 +57,7 @@ public class MyPageFragment extends Fragment {
                 //Intent intent = new Intent(requireContext(), LoginActivity.class);
                 //startActivity(intent);
                 //requireActivity().getSupportFragmentManager().beginTransaction().remove(MyPageFragment.this).commit();
+
             }
         });
         TextView EmailView=view.findViewById(R.id.my_page_email_tv);

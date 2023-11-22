@@ -24,7 +24,7 @@
         android:id="@+id/dialog_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="글 잘성을 그만두시겠습니까?"
+        android:text="글 작성을 그만두시겠습니까?"
         android:textColor="@color/black"
         android:fontFamily="@font/pretendard_medium"
         android:textSize="18sp"

@@ -107,7 +107,7 @@ public class FindFabClickFragment extends Fragment {
         locationSpinner = binding.findFabClickLocationSp;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(),
-                R.array.find_fab_click_location_spinner_array,
+                R.array.location_spinner_array,
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
