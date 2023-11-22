@@ -153,10 +153,7 @@ public class FindFabClickFragment extends Fragment {
         String location_detail = binding.findFabClickLocationDetailEt.getText().toString();
         String date = binding.findFabClickDateEt.getText().toString();
         String more = binding.findFabClickMoreEt.getText().toString();
-        String Image=null;
-        if(image!=null)
-            Image=image.toString();
-
+        String Image=image.toString();
         String uid = getUidOfCurrentUser();
         String DocumentId =uid + "_" + System.currentTimeMillis();
         //사용자 입력 값으로 FindPost객체 생성
@@ -206,7 +203,7 @@ public class FindFabClickFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-//
+    //
     public void uploadImageAndGetData(Uri imageUri) {
         // 이미지를 업로드할 버킷 선택 (Firebase Console에서 확인 가능)
         String bucketName = "gs://findssu-f23d6.appspot.com";
@@ -249,7 +246,7 @@ public class FindFabClickFragment extends Fragment {
             listener.onImageUploadFailure(e);
         });
     }
-//이미지 경로 이름 규칙(사용자 uid+업로드 시간)
+    //이미지 경로 이름 규칙(사용자 uid+업로드 시간)
     private String getPath(String extension) {
         String uid = getUidOfCurrentUser();
 
@@ -263,9 +260,9 @@ public class FindFabClickFragment extends Fragment {
         return  FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-private interface OnImageUploadListener {
-    void onImageUploadSuccess(String imageUrl);
+    private interface OnImageUploadListener {
+        void onImageUploadSuccess(String imageUrl);
 
-    void onImageUploadFailure(Exception e);
-}
+        void onImageUploadFailure(Exception e);
+    }
 }
