@@ -15,18 +15,22 @@ import android.widget.Toast;
 
 import com.example.find_ssu.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "EmailPassword";
+
+    private static final String TAG = "FINDSSU";
 
     ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "이메일과 비밀번호를 모두 입력하세요",
                             Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
@@ -67,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
     private void initFirebaseAuth() {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -101,7 +104,5 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
-
 
 }
