@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="find_fab_click_location_spinner_array">
+    <string-array name="location_spinner_array">
         <item>고민사거리</item>
         <item>교육관</item>
         <item>글로벌브레인홀</item>
         <item>나계</item>
-        <item>나노탄소재료연구실</item>
         <item>농구장</item>
         <item>대운동장</item>
         <item>돌계</item>
@@ -15,7 +14,6 @@
         <item>백마상</item>
         <item>베어드홀</item>
         <item>벤처중소기업센터</item>
-        <item>생활체육지도자연수원</item>
         <item>숭덕경상관</item>
         <item>숭실대입구역</item>
         <item>신양관</item>
@@ -25,6 +23,7 @@
         <item>전산관</item>
         <item>정보과학관</item>
         <item>조만식기념관</item>
+        <item>중앙도서관</item>
         <item>창신관</item>
         <item>창의관</item>
         <item>학생회관</item>
