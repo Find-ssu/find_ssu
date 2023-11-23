@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -119,10 +120,19 @@ public class FindFabClickFragment extends Fragment {
         findFabClickUploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 //findpost객체 생성 및 파이어베이스 업로드 후 프레그먼트 전환
-                addDataFromCustomObject();
-            }
-        });
+                if (binding.findFabClickNameEt.getText().toString().isEmpty())
+                    Toast.makeText(requireContext(), "물품명을 입력해주세요", Toast.LENGTH_SHORT).show();
+                else if (binding.findFabClickLocationDetailEt.getText().toString().isEmpty())
+                    Toast.makeText(requireContext(), "상세 습득장소를 입력해주세요", Toast.LENGTH_SHORT).show();
+                else if(binding.findFabClickDateEt.getText().toString().isEmpty())
+                    Toast.makeText(requireContext(), "습득일자를 입력해주세요", Toast.LENGTH_SHORT).show();
+                else if(binding.findFabClickMoreEt.getText().toString().isEmpty())
+                    Toast.makeText(requireContext(), "세부사항을 입력해주세요", Toast.LENGTH_SHORT).show();
+                else addDataFromCustomObject();
+
+        }});
 
         //이미지 추가 버튼
         ImageButton findFabClickImageButton=binding.findFabClickImgBtn;
@@ -153,7 +163,14 @@ public class FindFabClickFragment extends Fragment {
         String location_detail = binding.findFabClickLocationDetailEt.getText().toString();
         String date = binding.findFabClickDateEt.getText().toString();
         String more = binding.findFabClickMoreEt.getText().toString();
-        String Image=image.toString();
+        String Image;
+        if(image!=null){
+             Image=image.toString();
+        }
+        else{
+            Image=null;
+        }
+
         String uid = getUidOfCurrentUser();
         String DocumentId =uid + "_" + System.currentTimeMillis();
         //사용자 입력 값으로 FindPost객체 생성
