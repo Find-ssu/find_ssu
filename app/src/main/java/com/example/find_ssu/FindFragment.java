@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -19,14 +20,14 @@ public class FindFragment extends Fragment {
     private static final String TAG = "FINDSSU";
 
     private FloatingActionButton findFab;
-
-
+    private ImageButton Mapsbtn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find, container, false);
 
         findFab = view.findViewById(R.id.find_fab);
+        Mapsbtn = view.findViewById(R.id.find_map_btn);
 
 
         findFab.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +46,22 @@ public class FindFragment extends Fragment {
             }
         });
 
+        Mapsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 버튼을 클릭하면 다른 프래그먼트로 전환
+                MapsFragment MapsFragment = new MapsFragment();
+
+                // Fragment 전환
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_find, MapsFragment);
+                fragmentTransaction.addToBackStack("FindFragment");
+                fragmentTransaction.commit();
+
+                findFab.setVisibility(View.GONE);
+            }
+        });
         return view;
     }
 
@@ -63,6 +80,5 @@ public class FindFragment extends Fragment {
             }
         });
     }
-
 
 }
