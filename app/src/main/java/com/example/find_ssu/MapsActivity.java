@@ -1,5 +1,9 @@
 package com.example.find_ssu;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,13 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.Dimension;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
-import com.example.find_ssu.databinding.ActivityMainBinding;
+import com.example.find_ssu.databinding.FragmentFindBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,44 +25,38 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.example.find_ssu.databinding.ActivityMapsBinding;
 
-import java.util.ArrayList;
-import java.util.zip.Inflater;
-
-public class MapsFragment extends Fragment implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
-    public MapsFragment() {
-        // Required empty public constructor
-    }
+    private ActivityMapsBinding binding;
+    private FindFragment findfragment;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.fragment_maps, container, false);
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_maps, container, false);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        findfragment = new FindFragment();
+        // ImageButton 참조 가져오기
+        ImageButton backButton = findViewById(R.id.map_back_button);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               finish();
+            }
+        });
+
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-
-        if (mapFragment == null) {
-            mapFragment = SupportMapFragment.newInstance();
-            getChildFragmentManager().beginTransaction()
-                    .replace(R.id.map, mapFragment)
-                    .commit();
-        }
-
         mapFragment.getMapAsync(this);
     }
 
-    //xml파일을 bitmap으로 변환하는 함수
     private Bitmap createDrawableFromView(Context context, View view) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -79,7 +71,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         return bitmap;
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -96,7 +87,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(soongsil, 16));
 
         //커스텀 버튼 불러오기
-        View marker_root_view = LayoutInflater.from(getActivity()).inflate(R.layout.marker, null);
+        View marker_root_view = LayoutInflater.from(this).inflate(R.layout.marker, null);
         TextView tv_marker;
         tv_marker = marker_root_view.findViewById(R.id.map_marker);
 
@@ -107,8 +98,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 .position(law_officer)
                 .anchor(0.5f, 0.5f) // polyline이 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
                 .title("법학관");
-        View marker = LayoutInflater.from(getActivity()).inflate(R.layout.marker, null);
-        mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker_root_view))));
+        View marker = LayoutInflater.from(this).inflate(R.layout.marker, null);
+        mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view))));
 
         //백마상
         LatLng white_horse_statue = new LatLng(37.4966196, 126.957354);
@@ -117,8 +108,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 .position(white_horse_statue)
                 .anchor(0.5f, 0.5f)
                 .title("백마상");
-        View marker1 = LayoutInflater.from(getActivity()).inflate(R.layout.marker, null);
-        mMap.addMarker(markerOptions1.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getActivity(), marker_root_view))));
+        View marker1 = LayoutInflater.from(this).inflate(R.layout.marker, null);
+        mMap.addMarker(markerOptions1.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view))));
     }
 }
-
