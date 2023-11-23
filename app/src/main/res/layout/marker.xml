@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
-        android:id="@+id/tv_marker"
+        android:id="@+id/map_marker"
         android:layout_width="25dp"
         android:layout_height="25dp"
 
-        android:backgroundTint="#02A6CB"
-        android:gravity="top|center"
-        android:paddingTop="1dp"
-        android:text=""
+        android:background="@drawable/bg_marker_resoure"
+        android:gravity="center"
+        android:text="+10"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="16dp"
+        android:autoSizeMinTextSize="1dp"
+        android:elevation="20dp"/>
 
 
 </LinearLayout>
