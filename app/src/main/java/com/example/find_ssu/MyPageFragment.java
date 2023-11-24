@@ -1,6 +1,7 @@
 package com.example.find_ssu;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -28,6 +30,12 @@ public class MyPageFragment extends Fragment {
 
     private TextView my_page_logout_tv;
     private TextView my_page_email_tv;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String email = user.getEmail();
+
+
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,7 @@ public class MyPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
+
 
         TextView logoutButton = view.findViewById(R.id.my_page_logout_tv);
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +70,8 @@ public class MyPageFragment extends Fragment {
             }
         });
         TextView EmailView=view.findViewById(R.id.my_page_email_tv);
+        EmailView.setText(email);
+
 
         return view;
     }
@@ -75,4 +86,5 @@ public class MyPageFragment extends Fragment {
         else
             Log.d(TAG, "signOut:failure");
     }
+
 }
