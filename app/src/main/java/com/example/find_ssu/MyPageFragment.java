@@ -25,17 +25,10 @@ import java.util.List;
 
 public class MyPageFragment extends Fragment {
 
-
     private static final String TAG = "FINDSSU";
-
-    private TextView my_page_logout_tv;
-    private TextView my_page_email_tv;
+    //사용자 이메일 정보 파이어베이스에서 get
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String email = user.getEmail();
-
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,29 +46,17 @@ public class MyPageFragment extends Fragment {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(requireContext(), LoginActivity.class);
-                startActivity(intent);
-                requireActivity().getSupportFragmentManager().beginTransaction().remove(MyPageFragment.this).commit();
-
-                //파이어베이스 로그아웃
+                //파이어베이스 로그아웃 후 액티비티 종료
                 signOut();
                 getActivity().finish();
-
-                // 로그아웃 버튼을 클릭하면 LoginActivity로 이동
-                //Intent intent = new Intent(requireContext(), LoginActivity.class);
-                //startActivity(intent);
-                //requireActivity().getSupportFragmentManager().beginTransaction().remove(MyPageFragment.this).commit();
-
             }
         });
+        //사용자 이메일정보 띄우기
         TextView EmailView=view.findViewById(R.id.my_page_email_tv);
         EmailView.setText(email);
-
-
         return view;
     }
-
+//파이어베이스 로그아웃 함수
     private void signOut() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
