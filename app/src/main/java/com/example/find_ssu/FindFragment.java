@@ -1,5 +1,6 @@
 package com.example.find_ssu;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -63,16 +64,10 @@ public class FindFragment extends Fragment {
         findBinding.findMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 버튼을 클릭하면 다른 프래그먼트로 전환
-                MapsFragment MapsFragment = new MapsFragment();
 
-                // Fragment 전환
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_find, MapsFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
                 findBinding.findFab.setVisibility(View.GONE);
+                Intent intent = new Intent(requireActivity(), MapsActivity.class);
+                startActivity(intent);
             }
         });
         return findBinding.getRoot();
