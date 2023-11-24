@@ -270,7 +270,7 @@ public class FindFabClickFragment extends Fragment {
         String dir = uid ;
 
         String fileName =uid + "_" + System.currentTimeMillis() + "." + extension;
-        return dir + "/" + fileName;
+        return "Find/"+ dir + "/" + fileName;
     }
     //사용자 Uid반환 함수
     private String getUidOfCurrentUser() {
