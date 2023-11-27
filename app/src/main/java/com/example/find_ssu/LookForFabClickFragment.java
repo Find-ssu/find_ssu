@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,9 +31,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import android.widget.TextView;
 
 
 public class LookForFabClickFragment extends Fragment {
+
+    private TextView selectedDateTextView;
+
     private static final String TAG = "FINDSSU";
     FragmentLookForFabClickBinding binding;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -47,6 +52,17 @@ public class LookForFabClickFragment extends Fragment {
         View rootview = binding.getRoot();
         ImageButton lookForFabClickBackButton = binding.lookForFabClickBackIv;
 
+
+        selectedDateTextView = binding.lookForFabClickDateEt;
+        Button dateButton = binding.lookForFabClickDateBtn;
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+
         lookForFabClickBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +75,7 @@ public class LookForFabClickFragment extends Fragment {
 
                 builder.setView(dialogView);
                 AlertDialog dialog = builder.create();
+
 
                 // cancelButton의 클릭 이벤트 처리
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +210,19 @@ public class LookForFabClickFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    private void showDatePickerDialog() {
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.setOnDateSelectedListener(new DatePickerFragment.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(int year, int month, int day) {
+                String selectedDate = year + "년 " + (month + 1) + "월 " + day + "일";
+                selectedDateTextView.setText(selectedDate);
+                selectedDateTextView.setVisibility(View.VISIBLE);
+            }
+        });
+        datePickerFragment.show(getChildFragmentManager(), "datePicker");
     }
     public void uploadImageAndGetData(Uri imageUri) {
         // 이미지를 업로드할 버킷 선택 (Firebase Console에서 확인 가능)

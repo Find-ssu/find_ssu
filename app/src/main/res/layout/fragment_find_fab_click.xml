@@ -145,17 +145,32 @@
                 app:layout_constraintTop_toBottomOf="@id/find_fab_click_location_detail_et"
                 />
 
-            <EditText
-                android:id="@+id/find_fab_click_date_et"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:background="@drawable/edit_fab_click_round"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/find_fab_click_date_btn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/find_fab_click_date_tv"
+                android:text="날짜선택"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_round"
+                app:layout_constraintStart_toStartOf="@id/find_fab_click_date_tv"
+                app:layout_constraintTop_toBottomOf="@id/find_fab_click_date_tv" />
+
+            <TextView
+                android:id="@+id/find_fab_click_date_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/find_fab_click_date_btn"
+                app:layout_constraintTop_toTopOf="@id/find_fab_click_date_btn"
+                android:text=" "
+                android:textColor="@color/black"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:visibility="invisible"
                 />
 
             <TextView
@@ -167,7 +182,7 @@
                 android:textSize="15sp"
                 android:fontFamily="@font/pretendard_medium"
                 android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@id/find_fab_click_date_et"
+                app:layout_constraintStart_toStartOf="@id/find_fab_click_date_tv"
                 app:layout_constraintTop_toBottomOf="@id/find_fab_click_date_et"
                 />
 
