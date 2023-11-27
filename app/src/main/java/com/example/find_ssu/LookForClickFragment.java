@@ -2,6 +2,7 @@ package com.example.find_ssu;
 
 import android.os.Bundle;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,10 +11,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.example.find_ssu.databinding.FragmentFindBinding;
+import com.example.find_ssu.databinding.FragmentFindClickBinding;
+import com.example.find_ssu.databinding.FragmentLookForClickBinding;
 
 
 public class LookForClickFragment extends Fragment {
+    FragmentLookForClickBinding binding;
 
+    static String name;
+    static String location;
+    static String date;
+    static String more;
+    static String image;
+
+    public static LookForClickFragment newInstance(LookForPost lookForPost) {
+        LookForClickFragment fragment = new LookForClickFragment();
+
+        // 인스턴스 변수에 데이터 할당
+        fragment.name = lookForPost.getName().toString();
+        fragment.location = lookForPost.getLocation().toString();
+        fragment.date = lookForPost.getDate().toString();
+        fragment.more = lookForPost.getMore().toString();
+        if(lookForPost.getImage()==null)
+            fragment.image=null;
+        else
+            fragment.image = lookForPost.getImage().toString();
+
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,25 +53,31 @@ public class LookForClickFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_look_for_click, container, false);
-        ImageButton back = view.findViewById(R.id.look_for_click_back_iv);
+        binding=FragmentLookForClickBinding.inflate(inflater,container,false);
+        View rootview =binding.getRoot();
+        ImageView back = binding.lookForClickBackIv;
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 화면 전환을 위한 Fragment 객체 생성
-                Fragment lookForFragment = new LookForFragment();
+                Fragment LookForFragment = new LookForFragment();
 
                 // Fragment 전환
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_look_for_click, lookForFragment);
+                fragmentTransaction.replace(R.id.fragment_look_for_click, LookForFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
+        binding.lookForClickNameInputTv.setText(name);
+        binding.lookForClickLocationInputTv.setText(location);
+        binding.lookForClickDateInputTv.setText(date);
+        binding.lookForClickMoreInputTv.setText(more);
+        if(image!=null){
+            Glide.with(binding.getRoot().getContext()).load(image).into(binding.lookForClickIv);}
+        return rootview;
 
-        return view;
     }
 }

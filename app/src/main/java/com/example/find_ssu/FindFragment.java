@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
@@ -89,6 +90,8 @@ public class FindFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull FindPostViewHolder holder, int position, @NonNull FindPost model) {
                 holder.bind(model);
+                holder.position=position;
+                holder.model=model;
             }
             @NonNull
             @Override
@@ -127,4 +130,6 @@ public class FindFragment extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
+
+
 }
