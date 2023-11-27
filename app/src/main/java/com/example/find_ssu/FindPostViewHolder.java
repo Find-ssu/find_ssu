@@ -18,6 +18,14 @@ public class FindPostViewHolder extends RecyclerView.ViewHolder {
     FindPostViewHolder(@NonNull ItemviewBinding binding) {
         super(binding.getRoot());
         this.binding=binding;
+        binding.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //프레그먼트 전환
+
+            }
+        });
+
     }
 
     void bind(@NonNull FindPost findPost) {
