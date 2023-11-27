@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.example.find_ssu.databinding.ActivityFindFabClickBinding;
 import com.example.find_ssu.databinding.ActivityLookForFabClickBinding;
-import com.example.find_ssu.databinding.FragmentLookForFabClickBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
