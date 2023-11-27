@@ -16,12 +16,16 @@
         android:theme="@style/Theme.Find_ssu"
         tools:targetApi="31">
         <activity
+            android:name=".FindFabClickActivity"
+            android:exported="false" />
+        <activity
             android:name=".MapInfoActivity"
             android:exported="false"
             android:theme="@style/AppTheme.Custom"/>
         <activity
             android:name=".UserWriteActivity"
             android:exported="false" />
+            android:theme="@style/AppTheme.Custom" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
