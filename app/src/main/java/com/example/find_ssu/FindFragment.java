@@ -62,6 +62,8 @@ public class FindFragment extends Fragment {
         findBinding.findMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                findBinding.findFab.setVisibility(View.GONE);
                 Intent intent = new Intent(requireActivity(), MapsActivity.class);
                 startActivity(intent);
             }
