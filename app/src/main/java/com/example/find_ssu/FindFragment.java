@@ -39,7 +39,6 @@ public class FindFragment extends Fragment {
     private FirestorePagingAdapter<FindPost,FindPostViewHolder> adapter;
     private static final String TAG = "FINDSSU";
     private FirebaseFirestore db;
-
     FragmentFindBinding findBinding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +46,7 @@ public class FindFragment extends Fragment {
 
         findBinding = FragmentFindBinding.inflate(inflater,container,false);
         View rootview = findBinding.getRoot();
-
+        //글쓰기버튼 클릭이벤트
         findBinding.findFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +57,7 @@ public class FindFragment extends Fragment {
             }
         });
 
-
+//지도버튼 클릭이벤트
         findBinding.findMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,32 +67,30 @@ public class FindFragment extends Fragment {
                 startActivity(intent);
             }
         });
-//        initializeCloudFirestore();
-//        getAllDocumentsInACollection();
         return rootview;
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //FindPost콜렉션 시간순으로 갖고옴
         Query baseQuery = FirebaseFirestore.getInstance()
                 .collection("FindPost")
                 .orderBy("timestamp", Query.Direction.DESCENDING);
-
-        PagingConfig config = new PagingConfig(/* page size */ 4, /* prefetchDistance */ 2,
-                /* enablePlaceHolders */ false);
+        //페이징
+        PagingConfig config = new PagingConfig( 4, 2,false);
 
         FirestorePagingOptions<FindPost> options = new FirestorePagingOptions.Builder<FindPost>()
                 .setLifecycleOwner(getViewLifecycleOwner())
                 .setQuery(baseQuery, config, FindPost.class)
                 .build();
+
+        //FirestorePagingAdapter
         adapter=new FirestorePagingAdapter<FindPost, FindPostViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull FindPostViewHolder holder, int position, @NonNull FindPost model) {
                 holder.bind(model);
             }
-
             @NonNull
             @Override
             public FindPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -101,37 +98,15 @@ public class FindFragment extends Fragment {
                 return new FindPostViewHolder(binding);
             }
         };
+        //리사이클러뷰에 어뎁터 연결
         RecyclerView recyclerView = findBinding.findRv;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
-
     }
-    //    private void getAllDocumentsInACollection() {
-//        db.collection("FindPost")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData());
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
-//    }
-//    private void initializeCloudFirestore() {
-//        // Access a Cloud Firestore instance from your Activity
-//        db = FirebaseFirestore.getInstance();
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

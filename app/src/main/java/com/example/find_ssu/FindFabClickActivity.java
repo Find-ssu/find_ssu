@@ -86,7 +86,7 @@ public class FindFabClickActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        Intent intent = new Intent(FindFabClickActivity.this, FindFragment.class);
+                        Intent intent = new Intent(FindFabClickActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -161,7 +161,7 @@ public class FindFabClickActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Intent intent = new Intent(FindFabClickActivity.this,FindFragment.class);
+                        Intent intent = new Intent(FindFabClickActivity.this,MainActivity.class);
                         startActivity(intent);
                         Log.d(TAG, "업로드 후 프레그먼트 전환");
                         Toast.makeText(FindFabClickActivity.this, "게시물 업로드 완료", Toast.LENGTH_SHORT).show();
@@ -183,7 +183,7 @@ public class FindFabClickActivity extends AppCompatActivity {
             uploadImageAndGetData(selectedImageUri);
         }
     }
-
+//스토리지 이미지 업로드&image Uri반환 함수
     public void uploadImageAndGetData(Uri imageUri) {
         String bucketName = "gs://findssu-f23d6.appspot.com";
         String imagePath = getPath("jpg");
@@ -199,7 +199,7 @@ public class FindFabClickActivity extends AppCompatActivity {
             }
         });
     }
-
+//스토리지 이미지 업로드
     public void uploadImageToStorage(Uri imageUri, String bucketName, String imagePath, OnImageUploadListener listener) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -216,24 +216,24 @@ public class FindFabClickActivity extends AppCompatActivity {
             listener.onImageUploadFailure(e);
         });
     }
-
-    private String getPath(String extension) {
-        String uid = getUidOfCurrentUser();
-        String dir = uid;
-        String fileName = uid + "_" + System.currentTimeMillis() + "." + extension;
-        return "Find/" + dir + "/" + fileName;
-    }
-
-    private String getUidOfCurrentUser() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
-
     private interface OnImageUploadListener {
         void onImageUploadSuccess(String imageUrl);
 
         void onImageUploadFailure(Exception e);
     }
 
+    //경로 지정
+    private String getPath(String extension) {
+        String uid = getUidOfCurrentUser();
+        String dir = uid;
+        String fileName = uid + "_" + System.currentTimeMillis() + "." + extension;
+        return "Find/" + dir + "/" + fileName;
+    }
+    //사용자 Uid
+    private String getUidOfCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+//달력띄우기
     private void showDatePickerDialog() {
         DatePickerFragment datePickerFragment = new DatePickerFragment();
         datePickerFragment.setOnDateSelectedListener(new DatePickerFragment.OnDateSelectedListener() {
@@ -245,5 +245,6 @@ public class FindFabClickActivity extends AppCompatActivity {
             }
         });
         datePickerFragment.show(getSupportFragmentManager(), "datePicker");
-    }}
+    }
+}
 
