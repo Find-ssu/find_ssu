@@ -2,6 +2,9 @@ package com.example.find_ssu;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.paging.PagingConfig;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +23,9 @@ import android.widget.TextView;
 
 import com.example.find_ssu.databinding.ActivityMapsBinding;
 import com.example.find_ssu.databinding.FragmentFindBinding;
+import com.example.find_ssu.databinding.ItemviewBinding;
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,16 +38,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+    public ArrayList<FindPost> list = new ArrayList<>();
+    private FirebaseFirestore db;
     private static final String TAG = "MapsActivity";
+    private MapAdapter adapter = new MapAdapter(this,list);;
 
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
-    private FindFragment findfragment;
+    private ActivityMapsBinding binding;;
     LinearLayout mapInfoLayout;
+
+    RecyclerView findpost_map_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +63,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        findfragment = new FindFragment();
         // ImageButton 참조 가져오기
         ImageButton backButton = findViewById(R.id.map_back_button);
-        mapInfoLayout = findViewById(R.id.map_info_layout);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +78,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        db = FirebaseFirestore.getInstance();
+        mapInfoLayout = findViewById(R.id.map_info_layout);
+        findpost_map_info = findViewById(R.id.map_info_rv);
     }
 
     private Bitmap createDrawableFromView(Context context, View view) {
@@ -126,26 +142,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
                 if (marker.equals(law)) {
-                    //Intent intent = new Intent(MapsActivity.this, MapInfoActivity.class);
-                    //startActivity(intent);
+                    adapter.items.clear();
+                    getAllDocumentsInACollection("법학관");
                     mapInfoLayout.setVisibility(View.VISIBLE);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("FindPost")
-                            .whereEqualTo("location", "법학관")
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            Log.d(TAG, document.getId() + " => " + document.getData());
-                                        }
-                                    } else {
-                                        Log.d(TAG, "Error getting documents: ", task.getException());
-                                    }
-                                }
-                            });
-                    return true;
+
+                } else if (marker.equals(whitehorese)) {
+                    adapter.items.clear();
+                    getAllDocumentsInACollection("백마상");
+                    mapInfoLayout.setVisibility(View.VISIBLE);
                 }
                 return false;
             }
@@ -154,9 +158,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                mapInfoLayout.setVisibility(View.INVISIBLE);
+                mapInfoLayout.setVisibility(View.GONE);
+                adapter.items.clear();
 
             }
         });
+    }
+
+    private void getAllDocumentsInACollection(String building) {
+        db.collection("FindPost")
+                .whereEqualTo("location", building)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name=document.getString("name");
+                                String location=document.getString("location");
+                                String location_detail=document.getString("location_detail");
+                                String date=document.getString("date");
+                                String more=document.getString("more");
+                                String image=document.getString("image");
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                FindPost findPost=new FindPost(name,location,location_detail, date, more, image);
+
+                                findpost_map_info = findViewById(R.id.map_info_rv);
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                                findpost_map_info.setLayoutManager(layoutManager);
+
+                                findpost_map_info.setAdapter(adapter);
+                                adapter.addItem(findPost);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 }

@@ -71,7 +71,6 @@ public class FindFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                findBinding.findFab.setVisibility(View.GONE);
                 Intent intent = new Intent(requireActivity(), MapsActivity.class);
                 startActivity(intent);
             }
