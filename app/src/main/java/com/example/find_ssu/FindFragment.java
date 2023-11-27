@@ -41,6 +41,7 @@ public class FindFragment extends Fragment {
     private FirebaseFirestore db;
 
     FragmentFindBinding findBinding;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
