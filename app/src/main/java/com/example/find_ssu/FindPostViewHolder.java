@@ -23,6 +23,7 @@ public class FindPostViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 //프레그먼트 전환
 
+
             }
         });
 
