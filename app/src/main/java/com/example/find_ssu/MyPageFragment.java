@@ -1,11 +1,14 @@
 package com.example.find_ssu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +46,8 @@ public class MyPageFragment extends Fragment {
 
 
         TextView logoutButton = view.findViewById(R.id.my_page_logout_tv);
+        TextView writeListButton = view.findViewById(R.id.my_page_write_list_tv);
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +56,17 @@ public class MyPageFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        writeListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 화면 전환을 위한 액티비티 객체 생성
+                Intent intent = new Intent(getActivity(), UserWriteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         //사용자 이메일정보 띄우기
         TextView EmailView=view.findViewById(R.id.my_page_email_tv);
         EmailView.setText(email);
