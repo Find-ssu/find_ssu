@@ -71,6 +71,8 @@ public class LookForFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull LookForPostViewHolder holder, int position, @NonNull LookForPost model) {
                 holder.bind(model);
+                holder.position=position;
+                holder.model=model;
             }
             @NonNull
             @Override
