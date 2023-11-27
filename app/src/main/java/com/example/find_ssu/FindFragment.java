@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,11 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class FindFragment extends Fragment {
     private static final String TAG = "FINDSSU";
+    private FirebaseFirestore db;
 
     private FloatingActionButton findFab;
     private ImageButton Mapsbtn;
@@ -54,9 +61,31 @@ public class FindFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        initializeCloudFirestore();
+        getAllDocumentsInACollection();
+
         return view;
     }
-
+    private void getAllDocumentsInACollection() {
+        db.collection("FindPost")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+    private void initializeCloudFirestore() {
+        // Access a Cloud Firestore instance from your Activity
+        db = FirebaseFirestore.getInstance();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
