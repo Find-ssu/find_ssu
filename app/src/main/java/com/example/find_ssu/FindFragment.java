@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.example.find_ssu.databinding.FragmentFindBinding;
@@ -24,6 +27,7 @@ import com.example.find_ssu.databinding.FragmentFindFabClickBinding;
 import com.example.find_ssu.databinding.ItemviewBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -32,6 +36,7 @@ import java.util.List;
 
 
 public class FindFragment extends Fragment {
+    private FirestorePagingAdapter<FindPost,FindPostViewHolder> adapter;
     private static final String TAG = "FINDSSU";
     private FirebaseFirestore db;
 
@@ -43,13 +48,8 @@ public class FindFragment extends Fragment {
         findBinding = FragmentFindBinding.inflate(inflater,container,false);
         View rootview = findBinding.getRoot();
 
-        List<String> list = new ArrayList<>();
-        for(int i=0; i<20; i++){
-            list.add("Item=" + i);
-        }
-
         findBinding.findRv.setLayoutManager(new LinearLayoutManager(requireContext()));
-        findBinding.findRv.setAdapter(new MyAdapter(list));
+       // findBinding.findRv.setAdapter(new MyAdapter(list));
 
         findBinding.findFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +76,37 @@ public class FindFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        initializeCloudFirestore();
-        getAllDocumentsInACollection();
+//        initializeCloudFirestore();
+//        getAllDocumentsInACollection();
+        Query baseQuery = FirebaseFirestore.getInstance()
+                .collection("FindPost")
+                .orderBy("timestamp", Query.Direction.DESCENDING);
+
+        PagingConfig config = new PagingConfig(/* page size */ 4, /* prefetchDistance */ 2,
+                /* enablePlaceHolders */ false);
+
+        FirestorePagingOptions<FindPost> options = new FirestorePagingOptions.Builder<FindPost>()
+                .setLifecycleOwner(this) // an activity or a fragment
+                .setQuery(baseQuery, config, FindPost.class)
+                .build();
+        adapter=new FirestorePagingAdapter<FindPost, FindPostViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull FindPostViewHolder holder, int position, @NonNull FindPost model) {
+                holder.bind((model));
+            }
+
+            @NonNull
+            @Override
+            public FindPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                ItemviewBinding binding=ItemviewBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+                return new FindPostViewHolder(binding);
+            }
+        };
+        RecyclerView recyclerView = findBinding.findRv;
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(adapter);
+
+
         return findBinding.getRoot();
 
     }
@@ -116,47 +145,58 @@ public class FindFragment extends Fragment {
             }
         });
     }
-
-    private class MyViewHolder extends RecyclerView.ViewHolder{
-        private ItemviewBinding binding;
-
-        private MyViewHolder(ItemviewBinding binding){
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        private void bind(String text){
-            binding.itemNameTv.setText(text);
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
 
-    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
-        private List<String> list;
-
-        private MyAdapter(List<String> list) {this.list = list;}
-
-        @Override
-        @NonNull
-        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-            ItemviewBinding binding = ItemviewBinding.inflate(
-                    LayoutInflater.from(parent.getContext()),
-                    parent,
-                    false
-            );
-            return new MyViewHolder(binding);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            String text = list.get(position);
-            holder.bind(text);
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
+
+//    private class MyViewHolder extends RecyclerView.ViewHolder{
+//        private ItemviewBinding binding;
+//
+//        private MyViewHolder(ItemviewBinding binding){
+//            super(binding.getRoot());
+//            this.binding = binding;
+//        }
+//
+//        private void bind(String text){
+//            binding.itemNameTv.setText(text);
+//        }
+//    }
+//
+//    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
+//        private List<String> list;
+//
+//        private MyAdapter(List<String> list) {this.list = list;}
+//
+//        @Override
+//        @NonNull
+//        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+//            ItemviewBinding binding = ItemviewBinding.inflate(
+//                    LayoutInflater.from(parent.getContext()),
+//                    parent,
+//                    false
+//            );
+//            return new MyViewHolder(binding);
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+//            String text = list.get(position);
+//            holder.bind(text);
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return list.size();
+//        }
+//    }
 
 
 
