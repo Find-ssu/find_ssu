@@ -1,21 +1,24 @@
 package com.example.find_ssu;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.find_ssu.databinding.ActivityMapsBinding;
 import com.example.find_ssu.databinding.FragmentFindBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,14 +27,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.find_ssu.databinding.ActivityMapsBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+    private static final String TAG = "MapsActivity";
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private FindFragment findfragment;
+    LinearLayout mapInfoLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         findfragment = new FindFragment();
         // ImageButton 참조 가져오기
         ImageButton backButton = findViewById(R.id.map_back_button);
+        mapInfoLayout = findViewById(R.id.map_info_layout);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .anchor(0.5f, 0.5f) // polyline이 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
                 .title("법학관");
         View marker = LayoutInflater.from(this).inflate(R.layout.marker, null);
-        mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view))));
+        Marker law = mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view))));
 
         //백마상
         LatLng white_horse_statue = new LatLng(37.4966196, 126.957354);
@@ -109,6 +120,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .anchor(0.5f, 0.5f)
                 .title("백마상");
         View marker1 = LayoutInflater.from(this).inflate(R.layout.marker, null);
-        mMap.addMarker(markerOptions1.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view))));
+        Marker whitehorese = mMap.addMarker(markerOptions1.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view))));
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                if (marker.equals(law)) {
+                    //Intent intent = new Intent(MapsActivity.this, MapInfoActivity.class);
+                    //startActivity(intent);
+                    mapInfoLayout.setVisibility(View.VISIBLE);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("FindPost")
+                            .whereEqualTo("location", "법학관")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Log.d(TAG, document.getId() + " => " + document.getData());
+                                        }
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                mapInfoLayout.setVisibility(View.INVISIBLE);
+
+            }
+        });
     }
 }
