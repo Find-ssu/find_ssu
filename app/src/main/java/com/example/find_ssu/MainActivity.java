@@ -11,10 +11,10 @@ import com.example.find_ssu.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG_LOOK_FOR = "LookForFragment";
+   private static final String TAG_LOOK_FOR = "LookForFragment";
     private static final String TAG_HOME = "HomeFragment";
     private static final String TAG_MY_PAGE = "MyPageFragment";
-    private static final String TAG_FIND = "FindFragment";
+    static final String TAG_FIND = "FindFragment";
 
     private ActivityMainBinding binding;
 
