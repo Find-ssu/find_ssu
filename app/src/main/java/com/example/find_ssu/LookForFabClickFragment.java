@@ -3,6 +3,7 @@ package com.example.find_ssu;
 import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,16 +15,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 public class LookForFabClickFragment extends Fragment {
 
-    private Spinner locationSpinner;
+    private TextView selectedDateTextView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_look_for_fab_click, container, false);
         ImageButton lookForFabClickBackButton = view.findViewById(R.id.look_for_fab_click_back_iv);
+
+
+        selectedDateTextView = view.findViewById(R.id.look_for_fab_click_date_et);
+        Button dateButton = view.findViewById(R.id.look_for_fab_click_date_btn);
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
 
         lookForFabClickBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +51,7 @@ public class LookForFabClickFragment extends Fragment {
 
                 builder.setView(dialogView);
                 AlertDialog dialog = builder.create();
+
 
                 // cancelButton의 클릭 이벤트 처리
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -69,17 +84,9 @@ public class LookForFabClickFragment extends Fragment {
                 dialog.show();
             }
 
-        });
 
-        // 스피너와 array 연결
-        locationSpinner = view.findViewById(R.id.look_for_fab_click_location_sp);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                requireContext(),
-                R.array.location_spinner_array,
-                android.R.layout.simple_spinner_item
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locationSpinner.setAdapter(adapter);
+
+        });
 
         return view;
 
@@ -88,5 +95,18 @@ public class LookForFabClickFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    private void showDatePickerDialog() {
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.setOnDateSelectedListener(new DatePickerFragment.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(int year, int month, int day) {
+                String selectedDate = year + "년 " + (month + 1) + "월 " + day + "일";
+                selectedDateTextView.setText(selectedDate);
+                selectedDateTextView.setVisibility(View.VISIBLE);
+            }
+        });
+        datePickerFragment.show(getChildFragmentManager(), "datePicker");
     }
 }

@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.find_ssu.databinding.FragmentFindFabClickBinding;
@@ -40,6 +41,8 @@ import java.io.File;
 import java.util.UUID;
 
 public class FindFabClickFragment extends Fragment {
+
+    private TextView selectedDateTextView;
     private static final String TAG = "FINDSSU";
     FragmentFindFabClickBinding binding;
     private Spinner locationSpinner;
@@ -58,6 +61,16 @@ public class FindFabClickFragment extends Fragment {
         View rootview = binding.getRoot();
 
         ImageButton findFabClickBackButton = binding.findFabClickBackIv;
+        selectedDateTextView = binding.findFabClickDateEt;
+        Button dateButton = binding.findFabClickDateBtn;
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+
         findFabClickBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,5 +294,18 @@ public class FindFabClickFragment extends Fragment {
         void onImageUploadSuccess(String imageUrl);
 
         void onImageUploadFailure(Exception e);
+    }
+
+    private void showDatePickerDialog() {
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.setOnDateSelectedListener(new DatePickerFragment.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(int year, int month, int day) {
+                String selectedDate = year + "년 " + (month + 1) + "월 " + day + "일";
+                selectedDateTextView.setText(selectedDate);
+                selectedDateTextView.setVisibility(View.VISIBLE);
+            }
+        });
+        datePickerFragment.show(getChildFragmentManager(), "datePicker");
     }
 }
