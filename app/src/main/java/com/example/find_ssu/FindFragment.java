@@ -86,13 +86,13 @@ public class FindFragment extends Fragment {
                 /* enablePlaceHolders */ false);
 
         FirestorePagingOptions<FindPost> options = new FirestorePagingOptions.Builder<FindPost>()
-                .setLifecycleOwner(this) // an activity or a fragment
+                .setLifecycleOwner(getViewLifecycleOwner())
                 .setQuery(baseQuery, config, FindPost.class)
                 .build();
         adapter=new FirestorePagingAdapter<FindPost, FindPostViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull FindPostViewHolder holder, int position, @NonNull FindPost model) {
-                holder.bind((model));
+                holder.bind(model);
             }
 
             @NonNull
@@ -107,7 +107,7 @@ public class FindFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        return findBinding.getRoot();
+        return rootview;
 
     }
     private void getAllDocumentsInACollection() {
