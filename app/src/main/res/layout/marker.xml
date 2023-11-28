@@ -9,7 +9,7 @@
 
         android:background="@drawable/bg_marker_resoure"
         android:gravity="center"
-        android:text="+10"
+        android:text=""
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:autoSizeTextType="uniform"
