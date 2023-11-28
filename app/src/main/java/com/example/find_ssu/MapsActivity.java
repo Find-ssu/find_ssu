@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -97,8 +98,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //줌 경계 설정
         LatLngBounds bounds = new LatLngBounds(
-                new LatLng(37.496369 - 0.003, 126.957415 - 0.001),
-                new LatLng(37.496369 + 0.002, 126.957415 + 0.001)
+                new LatLng(37.496369 - 0.005, 126.957415 - 0.005),
+                new LatLng(37.496369 + 0.005, 126.957415 + 0.005)
         );
         googleMap.setLatLngBoundsForCameraTarget(bounds);
 
@@ -186,6 +187,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     adapter.items.clear();
                     getAllDocumentsInACollection(tag);
                     mapInfoLayout.setVisibility(View.VISIBLE);
+                    adapter.setOnItemClickListener(new MapAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(FindPost findPost) {
+                            // 항목 클릭을 처리하고, 새로운 액티비티 시작
+                            Intent intent = new Intent(MapsActivity.this, FindClickActivity.class);
+                            intent.putExtra("name", findPost.getName());
+                            intent.putExtra("location", findPost.getLocation());
+                            intent.putExtra("location_detail", findPost.getLocation_detail());
+                            intent.putExtra("date", findPost.getDate());
+                            intent.putExtra("more", findPost.getMore());
+                            intent.putExtra("image", findPost.getImage());
+
+                            startActivity(intent);
+                        }
+                    });
 
                 }else {
                     mapInfoLayout.setVisibility(View.INVISIBLE);
