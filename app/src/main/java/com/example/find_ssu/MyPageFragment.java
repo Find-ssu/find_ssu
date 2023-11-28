@@ -74,7 +74,8 @@ public class MyPageFragment extends Fragment {
         EmailView.setText(email);
         return view;
     }
-//파이어베이스 로그아웃 함수
+
+    //파이어베이스 로그아웃 함수
     private void signOut() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();

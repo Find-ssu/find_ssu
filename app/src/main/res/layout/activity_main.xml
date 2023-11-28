@@ -21,7 +21,8 @@
             app:itemTextColor="@color/tab_select_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/btm_navi_menu"
-            tools:layout_editor_absoluteX="0dp"></com.google.android.material.bottomnavigation.BottomNavigationView>
+            tools:layout_editor_absoluteX="0dp">
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

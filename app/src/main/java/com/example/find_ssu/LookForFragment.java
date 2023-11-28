@@ -45,7 +45,6 @@ public class LookForFragment extends Fragment {
                 // 액티비티 전환
                 Intent intent = new Intent(requireContext(), LookForFabClickActivity.class);
                 startActivity(intent);
-                lookForBinding.lookForFab.setVisibility(View.GONE);
             }
         });
 
