@@ -22,10 +22,6 @@
             android:name=".FindFabClickActivity"
             android:exported="false" />
         <activity
-            android:name=".MapInfoActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme.Custom" />
-        <activity
             android:name=".UserWriteActivity"
             android:exported="false" />
 
