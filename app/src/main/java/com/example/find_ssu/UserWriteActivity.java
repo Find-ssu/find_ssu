@@ -18,10 +18,12 @@ public class UserWriteActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 화면 전환을 위한 액티비티 객체 생성
-                Intent intent = new Intent(UserWriteActivity.this, MyPageFragment.class);
-                startActivity(intent);
-                finish(); // 이전 액티비티를 스택에서 제거하여 뒤로가기 버튼을 눌렀을 때 이전 화면이 나오지 않도록 함
+                onBackPressed();
+
+//                // 화면 전환을 위한 액티비티 객체 생성
+//                Intent intent = new Intent(UserWriteActivity.this, MyPageFragment.class);
+//                startActivity(intent);
+//                finish(); // 이전 액티비티를 스택에서 제거하여 뒤로가기 버튼을 눌렀을 때 이전 화면이 나오지 않도록 함
             }
         });
     }
