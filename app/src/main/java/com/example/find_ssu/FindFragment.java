@@ -58,7 +58,7 @@ public class FindFragment extends Fragment {
             }
         });
 
-//지도버튼 클릭이벤트
+        //지도버튼 클릭이벤트
         findBinding.findMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
