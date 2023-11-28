@@ -174,7 +174,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@id/find_fab_click_date_tv"
-                app:layout_constraintTop_toBottomOf="@id/find_fab_click_date_btn" />
+                app:layout_constraintTop_toBottomOf="@id/find_fab_click_date_et" />
 
             <EditText
                 android:id="@+id/find_fab_click_more_et"
