@@ -55,7 +55,6 @@ public class FindFragment extends Fragment {
                 // 액티비티 전환
                 Intent intent = new Intent(requireContext(), FindFabClickActivity.class);
                 startActivity(intent);
-                findBinding.findFab.setVisibility(View.GONE);
             }
         });
 
