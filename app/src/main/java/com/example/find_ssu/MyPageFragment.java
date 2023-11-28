@@ -52,8 +52,10 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //파이어베이스 로그아웃 후 액티비티 종료
+                Intent intent = new Intent(requireContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 signOut();
-                getActivity().finish();
             }
         });
 
