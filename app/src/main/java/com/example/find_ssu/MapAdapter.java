@@ -45,7 +45,9 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.ViewHolder> {
     }
 
     public void addItem(FindPost item){
+
         items.add(item);
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
