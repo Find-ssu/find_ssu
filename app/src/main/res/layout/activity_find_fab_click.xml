@@ -160,8 +160,8 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="find_fab_click_date_btn"
-                app:layout_constraintTop_toTopOf="find_fab_click_date_btn"
+                app:layout_constraintStart_toEndOf="@id/find_fab_click_date_btn"
+                app:layout_constraintTop_toTopOf="@id/find_fab_click_date_btn"
                 />
 
             <TextView
