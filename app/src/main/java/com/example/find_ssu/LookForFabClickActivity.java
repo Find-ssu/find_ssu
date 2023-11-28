@@ -145,6 +145,7 @@ public class LookForFabClickActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Intent intent = new Intent(LookForFabClickActivity.this,MainActivity.class);
                         startActivity(intent);
+                        finish();
                         Log.d(TAG, "업로드 후 프레그먼트 전환");
                         Toast.makeText(LookForFabClickActivity.this, "게시물 업로드 완료", Toast.LENGTH_SHORT).show();
                     }
