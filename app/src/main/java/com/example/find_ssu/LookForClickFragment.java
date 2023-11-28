@@ -60,15 +60,7 @@ public class LookForClickFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 화면 전환을 위한 Fragment 객체 생성
-                Fragment LookForFragment = new LookForFragment();
-
-                // Fragment 전환
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_look_for_click, LookForFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                requireActivity().onBackPressed();
             }
         });
         binding.lookForClickNameInputTv.setText(name);

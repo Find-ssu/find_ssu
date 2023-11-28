@@ -164,6 +164,7 @@ public class FindFabClickActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Intent intent = new Intent(FindFabClickActivity.this,MainActivity.class);
                         startActivity(intent);
+                        finish();
                         Log.d(TAG, "업로드 후 프레그먼트 전환");
                         Toast.makeText(FindFabClickActivity.this, "게시물 업로드 완료", Toast.LENGTH_SHORT).show();
                     }

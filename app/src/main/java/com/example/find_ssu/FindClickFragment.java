@@ -61,15 +61,7 @@ public class FindClickFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 화면 전환을 위한 Fragment 객체 생성
-                Fragment findFragment = new FindFragment();
-
-                // Fragment 전환
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_find_click, findFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                requireActivity().onBackPressed();
             }
         });
         binding.findClickNameInputTv.setText(name);
