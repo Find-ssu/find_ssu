@@ -161,9 +161,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@id/find_fab_click_date_btn"
-                app:layout_constraintTop_toTopOf="@id/find_fab_click_date_btn" />
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/find_fab_click_more_tv"
