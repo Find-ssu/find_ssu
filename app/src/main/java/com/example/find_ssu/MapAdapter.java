@@ -18,7 +18,8 @@ import java.util.ArrayList;
 public class MapAdapter extends RecyclerView.Adapter<MapAdapter.ViewHolder> {
 
     Context mContext;
-    ArrayList<FindPost> items = new ArrayList<>();
+    static ArrayList<FindPost> items = new ArrayList<>();
+    private static OnItemClickListener onItemClickListener;
 
     public MapAdapter(Context mContext, ArrayList<FindPost> items){
         this.mContext = mContext;
@@ -50,6 +51,15 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+
+    public interface OnItemClickListener {
+        void onItemClick(FindPost findPost);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView map_item_iv;
         TextView map_item_name_tv;
@@ -60,7 +70,17 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.ViewHolder> {
             map_item_iv = itemView.findViewById(R.id.map_item_iv);
             map_item_name_tv = itemView.findViewById(R.id.map_item_name_tv);
             map_item_date_input_tv = itemView.findViewById(R.id.map_item_date_input_tv);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(items.get(getAdapterPosition()));
+                    }
+                }
+            });
         }
+
 
 
         public void setItem(FindPost item) {

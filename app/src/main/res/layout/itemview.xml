@@ -64,7 +64,7 @@
         android:id="@+id/item_date_input_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2003/04/07"
+        android:text=""
         app:layout_constraintStart_toEndOf="@id/item_data_tv"
         app:layout_constraintTop_toTopOf="@id/item_data_tv"
         android:textSize="10dp"
@@ -75,7 +75,7 @@
     <View
         android:id="@+id/line"
         android:layout_width="370dp"
-        android:layout_height="1dp"
+        android:layout_height="0.57dp"
         android:background="#9AA5B1"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"

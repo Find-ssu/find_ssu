@@ -76,6 +76,8 @@ public class FindFragment extends Fragment {
         Query baseQuery = FirebaseFirestore.getInstance()
                 .collection("FindPost")
                 .orderBy("timestamp", Query.Direction.DESCENDING);
+
+
         //페이징
         PagingConfig config = new PagingConfig( 4, 2,false);
 

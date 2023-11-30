@@ -10,10 +10,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class HomeClickFragment extends Fragment {
+import com.bumptech.glide.Glide;
+import com.example.find_ssu.databinding.FragmentHomeBinding;
+import com.example.find_ssu.databinding.FragmentHomeClickBinding;
 
+public class HomeClickFragment extends Fragment {
+    FragmentHomeClickBinding binding;
+    private String number;
+    private String name;
+    private String date;
+    private String location;
+    private String img;
+
+    public static HomeClickFragment newInstance(HomePost homePost) {
+        HomeClickFragment fragment = new HomeClickFragment();
+
+        // 인스턴스 변수에 데이터 할당
+        fragment.name = homePost.gethomeName().toString();
+        fragment.location = homePost.gethomeLocation().toString();
+        fragment.number = homePost.getNumber().toString();
+        fragment.date = homePost.gethomeDate().toString();
+        if(homePost.getImg()==null)
+            fragment.img=null;
+        else
+            fragment.img = homePost.getImg().toString();
+
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,26 +50,21 @@ public class HomeClickFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_home_click, container, false);
-        ImageButton back = view.findViewById(R.id.home_click_back_iv);
+        binding = FragmentHomeClickBinding.inflate(inflater,container,false);
+        View rootview = binding.getRoot();
+        ImageView back = binding.homeClickBackIv;
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // 화면 전환을 위한 Fragment 객체 생성
-                Fragment homeFragment = new HomeFragment();
-
-                // Fragment 전환
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_home_click, homeFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
+            public void onClick(View v) {requireActivity().onBackPressed();}
         });
-
-        return view;
+        binding.homeClickFeatureTv.setText(name);
+        binding.homeClickSerialNumTv.setText(number);
+        binding.homeClickLocationTv.setText(location);
+        binding.homeClickDateTv.setText(date);
+        if(img!=null){
+            Glide.with(binding.getRoot().getContext()).load(img).into(binding.homeClickIv);}
+        return rootview;
 
     }
 }
