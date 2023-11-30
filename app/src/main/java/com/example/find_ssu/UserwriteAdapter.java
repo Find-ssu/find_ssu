@@ -3,6 +3,7 @@ package com.example.find_ssu;
 import static androidx.core.content.ContextCompat.startActivity;
 import static java.security.AccessController.getContext;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -107,6 +108,10 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(context, "게시물 삭제 완료", Toast.LENGTH_SHORT).show();
+                                    if (context instanceof Activity) {
+                                        ((Activity) context).finish();
+                                    }
+
                                 }
                             })
                                     .addOnFailureListener(new OnFailureListener() {
