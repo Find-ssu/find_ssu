@@ -82,6 +82,7 @@
         app:layout_constraintTop_toBottomOf="@id/item_view_user_write_fl" />
 
     <ImageButton
+        android:id="@+id/item_user_write_del_btn"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="#00FFFFFF"
