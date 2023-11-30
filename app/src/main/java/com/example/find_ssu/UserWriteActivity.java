@@ -30,7 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserWriteActivity extends AppCompatActivity {
+public class UserWriteActivity<T> extends AppCompatActivity {
     ActivityUserWriteBinding binding;
     private FirestorePagingAdapter<FindPost,FindPostViewHolder> adapter;
     private FirebaseFirestore db;
@@ -61,11 +61,11 @@ public class UserWriteActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<FindPost> dataList = new ArrayList<>();
+                            List<T> dataList = new ArrayList<>();
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 FindPost data = document.toObject(FindPost.class);
-                                dataList.add(data);
+                                dataList.add((T) data);
                             }
                             // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
                             displayDataInRecyclerView(dataList);
@@ -80,15 +80,31 @@ public class UserWriteActivity extends AppCompatActivity {
         lookfor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                initializeCloudFirestore();
+                db.collection("LookForPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<T> dataList = new ArrayList<>();
 
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                LookForPost data = document.toObject(LookForPost.class);
+                                dataList.add((T)data);
+                            }
+                            // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
+                            displayDataInRecyclerView(dataList);
+                        }
+
+                    }
+                });
             }
         });
 
 
     }
-    private void displayDataInRecyclerView(List<FindPost> dataList) {
+    private void displayDataInRecyclerView(List<T> dataList) {
         RecyclerView recyclerView = binding.userwriteRv;
-        UserwriteAdapter adapter = new UserwriteAdapter(dataList);
+        UserwriteAdapter adapter = new UserwriteAdapter(dataList,dataList.getClass());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
