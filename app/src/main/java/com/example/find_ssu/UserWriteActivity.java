@@ -28,6 +28,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class UserWriteActivity<T> extends AppCompatActivity {
@@ -57,8 +60,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 initializeCloudFirestore();
-                db.collection("FindPost").whereEqualTo("uid",uid).orderBy("timestamp", Query.Direction.DESCENDING).get().
-                addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                db.collection("FindPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -68,6 +70,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                                 FindPost data = document.toObject(FindPost.class);
                                 dataList.add((T) data);
                             }
+                            Collections.reverse(dataList);
                             // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
                             displayDataInRecyclerView(dataList);
                         }
@@ -92,6 +95,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                                 LookForPost data = document.toObject(LookForPost.class);
                                 dataList.add((T)data);
                             }
+                            Collections.reverse(dataList);
                             // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
                             displayDataInRecyclerView(dataList);
                         }
