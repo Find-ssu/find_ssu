@@ -1,6 +1,7 @@
 package com.example.find_ssu;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.ServerTimestamp;
 
 public class LookForPost {
@@ -11,6 +12,7 @@ public class LookForPost {
     private String image;
     @ServerTimestamp
     private Timestamp timestamp; // server timestamp
+    private String uid;
 
     public LookForPost() {}
 
@@ -20,6 +22,7 @@ public class LookForPost {
         this.date = date;
         this.more = more;
         this.image = image;
+        this.uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     public String getName() {
@@ -42,4 +45,5 @@ public class LookForPost {
     }
 
     public Timestamp getTimestamp() { return timestamp; }
+    public String getUid(){return uid;}
 }
