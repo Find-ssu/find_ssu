@@ -55,7 +55,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
         });
 
 
-        TextView find=binding.userwriteFind;
+        TextView find=binding.userWriteFind;
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +80,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
 
             }
         });
-        TextView lookfor=binding.userwriteLookfor;
+        TextView lookfor=binding.userWriteLookfor;
         lookfor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

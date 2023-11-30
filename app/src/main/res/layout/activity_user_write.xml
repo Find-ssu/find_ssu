@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:id="@+id/activity_user_write"
     tools:context=".UserWriteActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/user_write_const_top"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="140dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
@@ -42,40 +43,42 @@
             android:layout_marginTop="40dp"
             />
 
+        <TextView
+            android:id="@+id/user_write_find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:fontFamily="@font/pretendard_extra_bold"
+            android:text="찾아가세요"
+            android:textColor="@color/gray"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/user_write_click_back_iv"
+            app:layout_constraintTop_toBottomOf="@+id/user_write_click_back_iv" />
+
+        <TextView
+            android:id="@+id/user_write_lookfor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:fontFamily="@font/pretendard_extra_bold"
+            android:text="찾아요"
+            android:layout_marginStart="100dp"
+            android:textColor="@color/gray"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/user_write_find"
+            app:layout_constraintTop_toTopOf="@+id/user_write_find" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <TextView
-        android:id="@+id/userwrite_find"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:clickable="true"
-        android:fontFamily="@font/pretendard_extra_bold"
-        android:text="FIND"
-        android:textColor="@color/blue"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_write_const_top" />
-    <TextView
-        android:id="@+id/userwrite_lookfor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:clickable="true"
-        android:fontFamily="@font/pretendard_extra_bold"
-        android:text="LOOKFOR"
-        android:textColor="@color/blue"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/userwrite_find"
-        app:layout_constraintTop_toBottomOf="@+id/user_write_const_top" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userwrite_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/userwrite_find"
+        app:layout_constraintTop_toBottomOf="@id/user_write_const_top"
         >
     </androidx.recyclerview.widget.RecyclerView>
 
