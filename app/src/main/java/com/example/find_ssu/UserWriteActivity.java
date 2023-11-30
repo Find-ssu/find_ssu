@@ -57,7 +57,8 @@ public class UserWriteActivity<T> extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 initializeCloudFirestore();
-                db.collection("FindPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                db.collection("FindPost").whereEqualTo("uid",uid).orderBy("timestamp", Query.Direction.DESCENDING).get().
+                addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -104,7 +105,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
     }
     private void displayDataInRecyclerView(List<T> dataList) {
         RecyclerView recyclerView = binding.userwriteRv;
-        UserwriteAdapter adapter = new UserwriteAdapter(dataList,dataList.getClass());
+        UserwriteAdapter adapter = new UserwriteAdapter(dataList,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

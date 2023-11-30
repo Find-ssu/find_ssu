@@ -16,12 +16,13 @@ public class FindPost {
     private String more;
     private String image;
     private String uid;
+    private String documentuid;
     @ServerTimestamp
     private Timestamp timestamp; // server timestamp
 
     public FindPost() {}
 
-    public FindPost(String name, String location, String location_detail, String date, String more, String image) {
+    public FindPost(String name, String location, String location_detail, String date, String more, String image, String documentuid) {
         this.name = name;
         this.location = location;
         this.location_detail = location_detail;
@@ -29,6 +30,7 @@ public class FindPost {
         this.more = more;
         this.image = image;
         this.uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        this.documentuid=documentuid;
         };
 
 
@@ -56,4 +58,5 @@ public class FindPost {
 
     public Timestamp getTimestamp() { return timestamp; }
     public String getUid(){return uid;}
+    public String getDocumentuid(){return documentuid;}
 }
