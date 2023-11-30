@@ -157,7 +157,7 @@ public class FindFabClickActivity extends AppCompatActivity {
 
         String uid = getUidOfCurrentUser();
         String DocumentId = uid + "_" + System.currentTimeMillis();
-        FindPost findPost = new FindPost(name, location, location_detail, date, more, Image);
+        FindPost findPost = new FindPost(name, location, location_detail, date, more, Image,DocumentId);
         db.collection("FindPost").document(DocumentId).set(findPost)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
