@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Find_ssu"
         tools:targetApi="31">
         <activity
+            android:name=".UserWriteLookForActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserWriteFindActivity"
+            android:exported="false" />
+        <activity
             android:name=".LookForFabClickActivity"
             android:exported="false" />
         <activity

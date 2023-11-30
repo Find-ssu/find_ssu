@@ -43,14 +43,39 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <TextView
+        android:id="@+id/userwrite_find"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:fontFamily="@font/pretendard_extra_bold"
+        android:text="FIND"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_write_const_top" />
+    <TextView
+        android:id="@+id/userwrite_lookfor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:fontFamily="@font/pretendard_extra_bold"
+        android:text="LOOKFOR"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/userwrite_find"
+        app:layout_constraintTop_toBottomOf="@+id/user_write_const_top" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/user_write_rv"
+        android:id="@+id/userwrite_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/user_write_const_top"
+        app:layout_constraintTop_toBottomOf="@id/userwrite_find"
         >
     </androidx.recyclerview.widget.RecyclerView>
 
