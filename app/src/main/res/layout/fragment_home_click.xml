@@ -58,18 +58,6 @@
         />
 
     <TextView
-        android:id="@+id/home_click_serial_num_input_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2023-553"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/pretendard_medium"
-        app:layout_constraintStart_toEndOf="@id/home_click_serial_num_tv"
-        app:layout_constraintTop_toTopOf="@id/home_click_serial_num_tv"
-        />
-
-    <TextView
         android:id="@+id/home_click_feature_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,18 +68,6 @@
         android:fontFamily="@font/pretendard_medium"
         app:layout_constraintStart_toStartOf="@id/home_click_serial_num_tv"
         app:layout_constraintTop_toBottomOf="@id/home_click_serial_num_tv"
-        />
-
-    <TextView
-        android:id="@+id/home_click_feature_input_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="토끼 인형 파우치"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/pretendard_medium"
-        app:layout_constraintStart_toEndOf="@id/home_click_feature_tv"
-        app:layout_constraintTop_toTopOf="@id/home_click_feature_tv"
         />
 
     <TextView
@@ -108,18 +84,6 @@
         />
 
     <TextView
-        android:id="@+id/home_click_date_input_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2023/10/23"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/pretendard_medium"
-        app:layout_constraintStart_toEndOf="@id/home_click_date_tv"
-        app:layout_constraintTop_toTopOf="@id/home_click_date_tv"
-        />
-
-    <TextView
         android:id="@+id/home_click_location_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -130,18 +94,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@id/home_click_date_tv"
         app:layout_constraintTop_toBottomOf="@id/home_click_date_tv"
-        />
-
-    <TextView
-        android:id="@+id/home_click_location_input_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="불명"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/pretendard_medium"
-        app:layout_constraintStart_toEndOf="@id/home_click_location_tv"
-        app:layout_constraintTop_toTopOf="@id/home_click_location_tv"
         />
 
     <ImageView
