@@ -266,9 +266,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 String date=document.getString("date");
                                 String more=document.getString("more");
                                 String image=document.getString("image");
+                                String documentuid=document.getString("documentuid");
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
-                                FindPost findPost=new FindPost(name,location,location_detail, date, more, image);
+                                FindPost findPost=new FindPost(name,location,location_detail, date, more, image,documentuid);
 
                                 findpost_map_info = findViewById(R.id.map_info_rv);
                                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
