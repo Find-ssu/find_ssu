@@ -13,6 +13,8 @@ import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -46,6 +49,7 @@ public class FindFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         findBinding = FragmentFindBinding.inflate(inflater,container,false);
         View rootview = findBinding.getRoot();
         //글쓰기버튼 클릭이벤트
@@ -55,6 +59,41 @@ public class FindFragment extends Fragment {
                 // 액티비티 전환
                 Intent intent = new Intent(requireContext(), FindFabClickActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        findBinding.findSearchIb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchText = findBinding.findSearchWordEt.getText().toString().trim(); // EditText에서 검색어 가져오기
+
+                // 검색어에 따라 Firestore 쿼리 업데이트
+                Query query;
+                if (!searchText.isEmpty()) {
+                    // 검색어가 비어 있지 않으면, 검색어를 이용하여 Firestore 쿼리 수정
+                    query = FirebaseFirestore.getInstance()
+                            .collection("FindPost")
+                            .orderBy("timestamp", Query.Direction.DESCENDING)
+                            .whereEqualTo("name", searchText);
+                }
+
+                else {
+                    // 검색어가 비어 있으면 기본 쿼리 사용
+                    query = FirebaseFirestore.getInstance()
+                            .collection("FindPost")
+                            .orderBy("timestamp", Query.Direction.DESCENDING);
+                }
+
+                PagingConfig config = new PagingConfig(4, 2, false);
+                FirestorePagingOptions<FindPost> updatedOptions = new FirestorePagingOptions.Builder<FindPost>()
+                        .setLifecycleOwner(getViewLifecycleOwner())
+                        .setQuery(query, config, FindPost.class)
+                        .build();
+
+                // FirestorePagingAdapter에 새로운 FirestorePagingOptions 설정
+                adapter.updateOptions(updatedOptions);
+                adapter.notifyDataSetChanged();
+                Log.d(TAG, "옵션업데이트");
             }
         });
 
@@ -87,7 +126,7 @@ public class FindFragment extends Fragment {
                 .build();
 
         //FirestorePagingAdapter
-        adapter=new FirestorePagingAdapter<FindPost, FindPostViewHolder>(options) {
+        adapter = new FirestorePagingAdapter<FindPost, FindPostViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull FindPostViewHolder holder, int position, @NonNull FindPost model) {
                 holder.bind(model);
@@ -131,6 +170,8 @@ public class FindFragment extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
+
+
 
 
 }

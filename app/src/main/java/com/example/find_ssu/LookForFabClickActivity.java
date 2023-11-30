@@ -138,7 +138,7 @@ public class LookForFabClickActivity extends AppCompatActivity {
 
         String uid = getUidOfCurrentUser();
         String DocumentId = uid + "_" + System.currentTimeMillis();
-        LookForPost lookForPost = new LookForPost(name,location_detail, date, more, Image);
+        LookForPost lookForPost = new LookForPost(name,location_detail, date, more, Image,DocumentId);
         db.collection("LookForPost").document(DocumentId).set(lookForPost)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
