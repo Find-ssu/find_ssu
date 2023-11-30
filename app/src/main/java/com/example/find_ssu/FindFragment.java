@@ -35,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -74,8 +75,9 @@ public class FindFragment extends Fragment {
                             .collection("FindPost")
                             .orderBy("timestamp", Query.Direction.DESCENDING)
                             .whereEqualTo("name", searchText);
+                }
 
-                } else {
+                else {
                     // 검색어가 비어 있으면 기본 쿼리 사용
                     query = FirebaseFirestore.getInstance()
                             .collection("FindPost")
