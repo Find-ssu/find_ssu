@@ -2,6 +2,7 @@ package com.example.find_ssu;
 
 import static java.security.AccessController.getContext;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,14 @@ import java.util.List;
 
 public class
 
-UserwriteAdapter extends RecyclerView.Adapter<UserwriteAdapter.ViewHolder> {
-    private List<FindPost> dataList;
+UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.ViewHolder> {
+    private List<T> dataList;
+     public Class<T> dataType;
 
 
-    public UserwriteAdapter(List<FindPost> dataList) {this.dataList = dataList;
+    public UserwriteAdapter(List<T> dataList, Class<T> dataType) {
+        this.dataList = dataList;
+        this.dataType=dataType;
     }
 
 
@@ -35,9 +39,13 @@ UserwriteAdapter extends RecyclerView.Adapter<UserwriteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FindPost data = dataList.get(position);
-        // 데이터를 화면에 표시하기 위한 작업 수행
-        holder.bind(data);
+        T data = dataList.get(position);
+        if (data instanceof FindPost) {
+            holder.bind((FindPost) data);
+        } else if (data instanceof LookForPost) {
+            holder.bind((LookForPost) data);
+        }
+
     }
 
     @Override
@@ -59,14 +67,25 @@ UserwriteAdapter extends RecyclerView.Adapter<UserwriteAdapter.ViewHolder> {
         }
 
         public void bind(FindPost data) {
+                // 데이터를 화면의 뷰에 바인딩하는 작업 수행
+                user_write_tv.setText(data.getName());
+                user_write_date_tv.setText(data.getDate());
+                // 예시 URL 문자열
+                String imageUrl = data.getImage();
+                if (imageUrl != null) {
+                    Glide.with(itemView.getContext()).load(imageUrl).into(user_write_iv);
+                }
+        }
+        public void bind(LookForPost data) {
             // 데이터를 화면의 뷰에 바인딩하는 작업 수행
             user_write_tv.setText(data.getName());
             user_write_date_tv.setText(data.getDate());
             // 예시 URL 문자열
             String imageUrl = data.getImage();
-            if(imageUrl!=null){
-                Glide.with(itemView.getContext()).load(imageUrl).into(user_write_iv);}
-
+            if (imageUrl != null) {
+                Glide.with(itemView.getContext()).load(imageUrl).into(user_write_iv);
+            }
         }
+
     }
 }
