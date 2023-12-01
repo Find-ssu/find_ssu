@@ -135,7 +135,7 @@ public class FindFabClickActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setAction(Intent.ACTION_PICK);
                 startActivityForResult(intent, PICK_IMAGE_REQUEST);
             }
         });
@@ -180,7 +180,8 @@ public class FindFabClickActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
             uploadImageAndGetData(selectedImageUri);
-        }
+        }else if (data == null && data.getData() == null)
+            Toast.makeText(FindFabClickActivity.this, "선택된 이미지 없음", Toast.LENGTH_SHORT).show();
     }
 //스토리지 이미지 업로드&image Uri반환 함수
     public void uploadImageAndGetData(Uri imageUri) {
