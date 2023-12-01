@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -54,21 +56,26 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         T data = dataList.get(position);
         if (data instanceof FindPost) {
             holder.bind((FindPost) data);
+            holder.model=(FindPost)data;
         } else if (data instanceof LookForPost) {
             holder.bind((LookForPost) data);
+            holder.model=(LookForPost)data;
         }
 
     }
+
 
     @Override
     public int getItemCount() {
         return dataList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder<T> extends RecyclerView.ViewHolder {
+        private T model;
         ImageView user_write_iv;
         TextView user_write_tv;
         TextView user_write_date_tv;
@@ -82,6 +89,22 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
             user_write_tv=itemView.findViewById(R.id.item_user_write_name_tv);
             user_write_date_tv=itemView.findViewById(R.id.item_user_write_date_input_tv);
             user_write_del_btn=itemView.findViewById(R.id.item_user_write_del_btn);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    //프레그먼트 전환
+                    // 전환할 프래그먼트 인스턴스 생성
+                    FragmentManager fragmentManager = ((AppCompatActivity)view.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    if(model instanceof FindPost)
+                        fragmentTransaction.replace(R.id.activity_user_write, FindClickFragment.newInstance((FindPost) model));
+                    else if (model instanceof LookForPost)
+                        fragmentTransaction.replace(R.id.activity_user_write, LookForClickFragment.newInstance((LookForPost) model));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
             user_write_del_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
