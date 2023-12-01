@@ -24,6 +24,7 @@ public class HomeClickFragment extends Fragment {
     private String date;
     private String location;
     private String img;
+    private String timestamp;
 
     public static HomeClickFragment newInstance(HomePost homePost) {
         HomeClickFragment fragment = new HomeClickFragment();
@@ -33,6 +34,7 @@ public class HomeClickFragment extends Fragment {
         fragment.location = homePost.gethomeLocation().toString();
         fragment.number = homePost.getNumber().toString();
         fragment.date = homePost.gethomeDate().toString();
+        fragment.timestamp = homePost.getTimestamp().toString();
         if(homePost.getImg()==null)
             fragment.img=null;
         else
