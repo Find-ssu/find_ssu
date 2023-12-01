@@ -60,7 +60,7 @@ public class HomeClickFragment extends Fragment {
             @Override
             public void onClick(View v) {requireActivity().onBackPressed();}
         });
-        binding.homeClickFeatureTv.setText(name);
+        binding.homeClickFeatureInputTv.setText(name);
         binding.homeClickSerialNumTv.setText(number);
         binding.homeClickLocationTv.setText(location);
         binding.homeClickDateTv.setText(date);

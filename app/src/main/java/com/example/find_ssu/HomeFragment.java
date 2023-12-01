@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
                             HomePost homePost = new HomePost(number, name, location, date, img, timestamp);
                             adapter.addItem(homePost);
                         }
-                        adapter.notifyDataSetChanged(); // Notify adapter of the data change
+                        adapter.notifyDataSetChanged();
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
