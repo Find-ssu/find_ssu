@@ -115,7 +115,7 @@ public class FindFragment extends Fragment {
         Query baseQuery = FirebaseFirestore.getInstance()
                 .collection("FindPost")
                 .orderBy("timestamp", Query.Direction.DESCENDING);
-
+        Log.d(TAG, baseQuery.toString());
 
         //페이징
         PagingConfig config = new PagingConfig( 4, 2,false);
@@ -136,6 +136,8 @@ public class FindFragment extends Fragment {
             @NonNull
             @Override
             public FindPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                Log.d(TAG, "onCreateViewHolder()");
+
                 ItemviewBinding binding=ItemviewBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
                 return new FindPostViewHolder(binding);
             }
@@ -161,6 +163,8 @@ public class FindFragment extends Fragment {
     }
     @Override
     public void onStart() {
+        Log.d(TAG, "onStart");
+
         super.onStart();
         adapter.startListening();
     }
