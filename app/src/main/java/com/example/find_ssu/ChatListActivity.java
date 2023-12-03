@@ -96,7 +96,7 @@ public class ChatListActivity extends AppCompatActivity {
 
         private void getLatestSubchatDocument(String documentName) {
             db.collection("Chat").document(documentName).collection("subchat")
-                    .orderBy("timestamp", Query.Direction.ASCENDING)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .limit(1) // 가장 최신의 하나만 가져옴
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
