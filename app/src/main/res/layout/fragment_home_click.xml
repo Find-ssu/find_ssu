@@ -121,11 +121,10 @@
         android:id="@+id/home_click_instagram_link_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="web"
         app:layout_constraintStart_toEndOf="@id/home_click_link_iv"
         app:layout_constraintTop_toTopOf="@id/home_click_link_iv"
         android:textColor="@color/blue"
-        android:text="인스타 본문 링크"
+        android:text="인스타 DM 연락 링크"
         android:fontFamily="@font/pretendard_medium"
         android:textSize="15sp"
         />

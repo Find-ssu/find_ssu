@@ -7,16 +7,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import com.example.find_ssu.Find.FindPost;
 import com.example.find_ssu.R;
 import com.example.find_ssu.databinding.FragmentHomeBinding;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -26,11 +32,14 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private ArrayList<HomePost> list = new ArrayList<>();
+    private ArrayList<HomePost> originalList = new ArrayList<>(); // 원본 데이터 보존
     private HomeAdapter adapter;
     private FirebaseFirestore db;
     private FragmentHomeBinding binding;
     private RecyclerView home_rv_view;
     private static final String TAG = "FINDSSU";
+    private EditText home_search_word_et;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +70,50 @@ public class HomeFragment extends Fragment {
         home_rv_view.setLayoutManager(layoutManager);
         home_rv_view.setAdapter(adapter);
 
+        home_search_word_et = binding.homeSearchWordEt;
+        home_search_word_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // 검색어가 변경될 때마다 호출되는 부분
+                String searchText = charSequence.toString().trim();
+                filterData(searchText);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
         return rootView;
+    }
+
+    private void filterData(String searchText) {
+
+        if (originalList.isEmpty()) {
+            originalList.addAll(list); // 원본 데이터를 초기화
+        }
+
+        ArrayList<HomePost> filteredList = new ArrayList<>();
+
+        if (searchText.isEmpty()) {
+            filteredList.addAll(originalList); // 검색어가 비어있을 때 원본 데이터 보여주기
+        } else {
+            // 검색어로 필터링된 결과를 리스트에 추가
+            for (HomePost post : originalList) {
+                if (post.gethomeName().toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredList.add(post);
+                }
+            }
+        }
+
+        adapter.updateList(filteredList); // 필터링된 결과를 어댑터에 전달하여 업데이트
     }
 
     @Override
