@@ -190,7 +190,7 @@
             android:id="@+id/look_for_way_tv_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="분실물 센터는"
+            android:text="분실물 센터는 "
             android:textSize="12sp"
             android:fontFamily="@font/pretendard_medium"
             android:textColor="#80000000"
