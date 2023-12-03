@@ -62,18 +62,23 @@ public class ChatActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.collection("Chat")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            addDataFromCustomObject(uid1, uid2, chatroom);
-                        } else {
-                            Log.w("chat", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+                if(uid1 == uid2){ //글쓴이와 보내는이가 같을떄(자기 자신에게 쪽지 보낼때)
+                    Toast.makeText(ChatActivity.this, "본인에게 쪽지를 보낼수 없습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else {
+                    db.collection("Chat")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        addDataFromCustomObject(uid1, uid2, chatroom);
+                                    } else {
+                                        Log.w("chat", "Error getting documents.", task.getException());
+                                    }
+                                }
+                            });
+                }
             }
         });
 
