@@ -19,25 +19,25 @@
         android:theme="@style/Theme.Find_ssu"
         tools:targetApi="31">
         <activity
-            android:name=".ChatingRoomActivity"
+            android:name=".Chat.ChatingRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatListActivity"
+            android:name=".Chat.ChatListActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".Chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".FindClickActivity"
+            android:name=".Find.FindClickActivity"
             android:exported="false" />
         <activity
-            android:name=".LookForFabClickActivity"
+            android:name=".LookFor.LookForFabClickActivity"
             android:exported="false" />
         <activity
-            android:name=".FindFabClickActivity"
+            android:name=".Find.FindFabClickActivity"
             android:exported="false" />
         <activity
-            android:name=".UserWriteActivity"
+            android:name=".Mypage.UserWriteActivity"
             android:exported="false" />
 
         <meta-data
@@ -45,11 +45,11 @@
             android:value="AIzaSyAQABX7OTkDIB-pXC66l0KQ3uHShpvQxDs" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".Map.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".Main.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -59,13 +59,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MembershipActivity"
+            android:name=".Main.MembershipActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Main.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Main.MainActivity"
             android:exported="false" />
     </application>
 

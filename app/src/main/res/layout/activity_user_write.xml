@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:id="@+id/activity_user_write"
-    tools:context=".UserWriteActivity">
+    tools:context=".Mypage.UserWriteActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/user_write_const_top"
