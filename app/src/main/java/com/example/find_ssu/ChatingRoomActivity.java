@@ -81,7 +81,7 @@ public class ChatingRoomActivity extends AppCompatActivity {
         db.collection("Chat")
                 .document(superdocumentId)
                 .collection("subchat")
-                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
