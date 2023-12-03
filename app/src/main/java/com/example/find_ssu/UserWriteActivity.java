@@ -73,10 +73,10 @@ public class UserWriteActivity<T> extends AppCompatActivity {
             public void onClick(View v) {
                 finish(); // 현재 엑티비티 종료
 
-                // 메인 엑티비티를 시작하는 Intent 생성
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // 메인 엑티비티가 이미 스택에 있으면 해당 엑티비티 위에 새로운 인스턴스를 생성하지 않도록 함
-                v.getContext().startActivity(intent); // 메인 엑티비티 시작
+//                // 메인 엑티비티를 시작하는 Intent 생성
+//                Intent intent = new Intent(v.getContext(), MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // 메인 엑티비티가 이미 스택에 있으면 해당 엑티비티 위에 새로운 인스턴스를 생성하지 않도록 함
+//                v.getContext().startActivity(intent); // 메인 엑티비티 시작
             }
         });
 
