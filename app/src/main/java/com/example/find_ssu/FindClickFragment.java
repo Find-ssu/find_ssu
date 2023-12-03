@@ -1,5 +1,6 @@
 package com.example.find_ssu;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -27,6 +28,7 @@ public class FindClickFragment extends Fragment {
      static String date;
      static String more;
      static String image;
+     static String uid;
 
     public static FindClickFragment newInstance(FindPost findPost) {
         FindClickFragment fragment = new FindClickFragment();
@@ -37,6 +39,7 @@ public class FindClickFragment extends Fragment {
         fragment.location_detail = findPost.getLocation_detail().toString();
         fragment.date = findPost.getDate().toString();
         fragment.more = findPost.getMore().toString();
+        fragment.uid = findPost.getUid().toString();
         if(findPost.getImage()==null)
             fragment.image=null;
         else
@@ -64,6 +67,16 @@ public class FindClickFragment extends Fragment {
                 requireActivity().onBackPressed();
             }
         });
+
+        binding.findChatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), ChatActivity.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+            }
+        });
+
         binding.findClickNameInputTv.setText(name);
         binding.findClickLocationInputTv.setText(location);
         binding.findClickLocationDetailInputTv.setText(location_detail);

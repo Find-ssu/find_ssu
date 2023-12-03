@@ -19,6 +19,16 @@
         android:layout_marginTop="45dp"
         />
 
+    <ImageView
+        android:id="@+id/look_for_chat_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="23dp"
+        android:src="@drawable/chat_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="48dp"/>
+
     <TextView
         android:id="@+id/look_for_click_title_tv"
         android:layout_width="wrap_content"

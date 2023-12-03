@@ -1,5 +1,6 @@
 package com.example.find_ssu;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.find_ssu.databinding.FragmentFindBinding;
 import com.example.find_ssu.databinding.FragmentFindClickBinding;
 import com.example.find_ssu.databinding.FragmentLookForClickBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class LookForClickFragment extends Fragment {
@@ -27,6 +29,7 @@ public class LookForClickFragment extends Fragment {
     static String date;
     static String more;
     static String image;
+    private String uid;
 
     public static LookForClickFragment newInstance(LookForPost lookForPost) {
         LookForClickFragment fragment = new LookForClickFragment();
@@ -36,6 +39,7 @@ public class LookForClickFragment extends Fragment {
         fragment.location = lookForPost.getLocation().toString();
         fragment.date = lookForPost.getDate().toString();
         fragment.more = lookForPost.getMore().toString();
+        fragment.uid = lookForPost.getUid().toString();
         if(lookForPost.getImage()==null)
             fragment.image=null;
         else
@@ -56,6 +60,7 @@ public class LookForClickFragment extends Fragment {
         binding=FragmentLookForClickBinding.inflate(inflater,container,false);
         View rootview =binding.getRoot();
         ImageView back = binding.lookForClickBackIv;
+        ImageView chatBtn = binding.lookForChatBtn;
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +68,16 @@ public class LookForClickFragment extends Fragment {
                 requireActivity().onBackPressed();
             }
         });
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), ChatActivity.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+            }
+        });
+
         binding.lookForClickNameInputTv.setText(name);
         binding.lookForClickLocationInputTv.setText(location);
         binding.lookForClickDateInputTv.setText(date);
