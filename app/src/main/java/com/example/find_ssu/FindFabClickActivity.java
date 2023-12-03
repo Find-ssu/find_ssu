@@ -137,6 +137,7 @@ public class FindFabClickActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_PICK);
                 startActivityForResult(intent, PICK_IMAGE_REQUEST);
+                Log.d(TAG,"이미지 업로드 클릭리스너");
             }
         });
     }
@@ -177,14 +178,17 @@ public class FindFabClickActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG,"Activityresult");
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
             uploadImageAndGetData(selectedImageUri);
         }else if (data == null && data.getData() == null)
             Toast.makeText(FindFabClickActivity.this, "선택된 이미지 없음", Toast.LENGTH_SHORT).show();
+
     }
 //스토리지 이미지 업로드&image Uri반환 함수
     public void uploadImageAndGetData(Uri imageUri) {
+        Log.d(TAG,"스토리지 이미지 업로드");
         String bucketName = "gs://findssu-f23d6.appspot.com";
         String imagePath = getPath("jpg");
         FirebaseStorage storage = FirebaseStorage.getInstance();
