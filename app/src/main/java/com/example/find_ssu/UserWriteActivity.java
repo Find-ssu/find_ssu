@@ -2,10 +2,12 @@ package com.example.find_ssu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +47,25 @@ public class UserWriteActivity<T> extends AppCompatActivity {
         binding=ActivityUserWriteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot()); // 액티비티 레이아웃 설정
 
+        initializeCloudFirestore();
+        db.collection("FindPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<T> dataList = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        FindPost data = document.toObject(FindPost.class);
+                        dataList.add((T) data);
+                    }
+                    Collections.reverse(dataList);
+                    // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
+                    displayDataInRecyclerView(dataList);
+                }
+
+            }
+        });
+
         ImageButton backButton = binding.userWriteClickBackIv;
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -59,12 +80,13 @@ public class UserWriteActivity<T> extends AppCompatActivity {
             }
         });
 
-
-
         TextView find=binding.userWriteFind;
+        TextView lookfor=binding.userWriteLookfor;
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                find.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blue));
+                lookfor.setTextColor(ContextCompat.getColor(view.getContext(), R.color.gray));
                 initializeCloudFirestore();
                 db.collection("FindPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -86,10 +108,12 @@ public class UserWriteActivity<T> extends AppCompatActivity {
 
             }
         });
-        TextView lookfor=binding.userWriteLookfor;
         lookfor.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View view) {
+                find.setTextColor(ContextCompat.getColor(view.getContext(), R.color.gray));
+                lookfor.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blue));
                 initializeCloudFirestore();
                 db.collection("LookForPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
