@@ -1,6 +1,7 @@
 package com.example.find_ssu.Chat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +16,10 @@ import com.example.find_ssu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,9 +27,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class ChatListActivity extends AppCompatActivity {
-    String uid1;
-    String uid2;
-    String documentName;
     private static final String TAG = "ChatList";
     FirebaseFirestore db;
     public ArrayList<ChatItem> list = new ArrayList<>();
@@ -72,55 +73,36 @@ public class ChatListActivity extends AppCompatActivity {
 
     private void getAllDocumentsInACollection(String user) {
         db.collection("Chat")
-                .orderBy("timestamp", Query.Direction.ASCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String documentName = document.getId();
-
-                                if (containsWord(documentName, user)) {
-                                    getLatestSubchatDocument(documentName);
-                                }
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
                         }
+
+                        list.clear();
+                        for (QueryDocumentSnapshot document : value) {
+                            String documentName = document.getId();
+
+                            if (containsWord(documentName, user)) {
+                                String message = document.getString("message");
+                                String timestamp = document.getString("timestamp");
+                                String uid1 = document.getString("uid1");
+                                String uid2 = document.getString("uid2");
+                                String documentId = document.getString("documentId");
+                                String superdocumentId = document.getString("superdocumentId");
+
+                                ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId);
+                                adapter.addItem(chatItem);
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }
-
-        private void getLatestSubchatDocument(String documentName) {
-            db.collection("Chat").document(documentName).collection("subchat")
-                    .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .limit(1) // 가장 최신의 하나만 가져옴
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String message = document.getString("message");
-                                    String timestamp = document.getString("timestamp");
-                                    String uid1 = document.getString("uid1");
-                                    String uid2 = document.getString("uid2");
-                                    String documentId = document.getString("documentId");
-                                    String superdocumentId = document.getString("superdocumentId");
-
-                                    ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId);
-                                    adapter.addItem(chatItem);
-                                }
-
-                            } else {
-                                Log.d(TAG, "Error getting subchat documents: ", task.getException());
-                            }
-                        }
-                    });
-
-    }
-
     private static boolean containsWord(String input, String targetWord) {
         return input.contains(targetWord);
     }

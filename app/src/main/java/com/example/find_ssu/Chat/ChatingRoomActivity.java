@@ -106,7 +106,7 @@ public class ChatingRoomActivity extends AppCompatActivity {
                             adapter.addItem(chatItem);
                         }
 
-                        adapter.notifyDataSetChanged(); // Notify the adapter that the data set has changed
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }

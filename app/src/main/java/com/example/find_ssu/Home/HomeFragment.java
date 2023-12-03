@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        list.clear(); // Clear existing data
+                        list.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String name = document.getString("name");
                             String location = document.getString("location");

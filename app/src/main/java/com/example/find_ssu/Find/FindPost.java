@@ -22,14 +22,14 @@ public class FindPost {
 
     public FindPost() {}
 
-    public FindPost(String name, String location, String location_detail, String date, String more, String image, String documentuid) {
+    public FindPost(String name, String location, String location_detail, String date, String more, String image, String documentuid, String uid) {
         this.name = name;
         this.location = location;
         this.location_detail = location_detail;
         this.date = date;
         this.more = more;
         this.image = image;
-        this.uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        this.uid= uid;
         this.documentuid=documentuid;
         };
 

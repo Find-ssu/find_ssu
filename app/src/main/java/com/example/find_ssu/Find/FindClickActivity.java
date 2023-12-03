@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +38,7 @@ public class FindClickActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(FindClickActivity.this, ChatActivity.class);
                 intent.putExtra("uid", uid);
+                Log.d("name", uid);
                 startActivity(intent);
             }
         });
