@@ -68,7 +68,12 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            addDataFromCustomObject(uid1, uid2, chatroom);
+                            if(uid1.equals(uid2)) {
+                                Toast.makeText(ChatActivity.this, "자신에게는 쪽지를 보낼 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }else {
+                                addDataFromCustomObject(uid1, uid2, chatroom);
+                            }
                         } else {
                             Log.w("chat", "Error getting documents.", task.getException());
                         }

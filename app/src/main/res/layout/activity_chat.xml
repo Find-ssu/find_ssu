@@ -45,7 +45,14 @@
         android:id="@+id/chat_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="112dp"
+        android:background="@null"
         android:hint="내용을 입력하세요"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="115dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:gravity="top"
+        android:fontFamily="@font/pretendard_medium"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="45dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

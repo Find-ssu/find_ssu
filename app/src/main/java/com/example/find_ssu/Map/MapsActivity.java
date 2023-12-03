@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -270,9 +271,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 String more=document.getString("more");
                                 String image=document.getString("image");
                                 String documentuid=document.getString("documentuid");
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                String uid = document.getString("uid");
 
-                                FindPost findPost=new FindPost(name,location,location_detail, date, more, image,documentuid);
+                                FindPost findPost=new FindPost(name,location,location_detail, date, more, image,documentuid,uid);
 
                                 findpost_map_info = findViewById(R.id.map_info_rv);
                                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
