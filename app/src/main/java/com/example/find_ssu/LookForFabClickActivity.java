@@ -1,6 +1,5 @@
 package com.example.find_ssu;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
@@ -23,13 +22,17 @@ import android.widget.Toast;
 
 import com.example.find_ssu.databinding.ActivityFindFabClickBinding;
 import com.example.find_ssu.databinding.ActivityLookForFabClickBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class LookForFabClickActivity extends AppCompatActivity {
     private static final String TAG = "FINDSSU";
@@ -37,7 +40,7 @@ public class LookForFabClickActivity extends AppCompatActivity {
     private TextView selectedDateTextView;
     private static final int PICK_IMAGE_REQUEST = 1;
     private FirebaseFirestore db;
-    Uri image;
+    String imageUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding= ActivityLookForFabClickBinding.inflate(getLayoutInflater());
@@ -113,7 +116,7 @@ public class LookForFabClickActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setAction(Intent.ACTION_PICK);
                 startActivityForResult(intent, PICK_IMAGE_REQUEST);
             }
         });
@@ -129,16 +132,9 @@ public class LookForFabClickActivity extends AppCompatActivity {
         String location_detail = binding.lookForFabClickLocationDetailEt.getText().toString();
         String date = binding.lookForFabClickDateEt.getText().toString();
         String more = binding.lookForFabClickMoreEt.getText().toString();
-        String Image;
-        if (image != null) {
-            Image = image.toString();
-        } else {
-            Image = null;
-        }
-
         String uid = getUidOfCurrentUser();
         String DocumentId = uid + "_" + System.currentTimeMillis();
-        LookForPost lookForPost = new LookForPost(name,location_detail, date, more, Image,DocumentId);
+        LookForPost lookForPost = new LookForPost(name,location_detail, date, more,imageUrl,DocumentId);
         db.collection("LookForPost").document(DocumentId).set(lookForPost)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -164,47 +160,46 @@ public class LookForFabClickActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
             uploadImageAndGetData(selectedImageUri);
-        }
+        } else if (data == null && data.getData() == null)
+            Toast.makeText(LookForFabClickActivity.this, "선택된 이미지 없음", Toast.LENGTH_SHORT).show();
     }
+
     //스토리지 이미지 업로드&image Uri반환 함수
     public void uploadImageAndGetData(Uri imageUri) {
         String bucketName = "gs://findssu-f23d6.appspot.com";
         String imagePath = getPath("jpg");
-        uploadImageToStorage(imageUri, bucketName, imagePath, new OnImageUploadListener() {
-            @Override
-            public void onImageUploadSuccess(String imageUrl) {
-                image = imageUri;
-            }
-
-            @Override
-            public void onImageUploadFailure(Exception e) {
-                Toast.makeText(LookForFabClickActivity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //스토리지 이미지 업로드
-    public void uploadImageToStorage(Uri imageUri, String bucketName, String imagePath,OnImageUploadListener listener) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         StorageReference imageRef = storageRef.child(imagePath);
         UploadTask uploadTask = imageRef.putFile(imageUri);
-        uploadTask.addOnSuccessListener(taskSnapshot -> {
-            imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                String imageUrl = uri.toString();
-                listener.onImageUploadSuccess(imageUrl);
-            }).addOnFailureListener(e -> {
-                listener.onImageUploadFailure(e);
-            });
-        }).addOnFailureListener(e -> {
-            listener.onImageUploadFailure(e);
+        uploadTask.addOnCompleteListener(this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@io.reactivex.rxjava3.annotations.NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()) {
+                    // 업로드가 성공한 경우, 이미지의 다운로드 URL을 가져옴
+                    imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
+                                if (downloadUri != null) {
+                                    imageUrl = downloadUri.toString();
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    // 업로드가 실패한 경우 에러 처리
+                    Exception exception = task.getException();
+                    if (exception != null) {
+                        Toast.makeText(LookForFabClickActivity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
         });
-    }
-    private interface OnImageUploadListener {
-        void onImageUploadSuccess(String imageUrl);
 
-        void onImageUploadFailure(Exception e);
     }
+
 
     //경로 지정
     private String getPath(String extension) {

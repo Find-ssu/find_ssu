@@ -52,7 +52,7 @@
             android:clickable="true"
             android:fontFamily="@font/pretendard_extra_bold"
             android:text="찾아가세요"
-            android:textColor="@color/gray"
+            android:textColor="@color/blue"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/user_write_click_back_iv"
             app:layout_constraintTop_toBottomOf="@+id/user_write_click_back_iv" />
