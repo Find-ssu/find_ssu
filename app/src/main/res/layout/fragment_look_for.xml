@@ -6,7 +6,7 @@
     android:id="@+id/fragment_look_for"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LookForFragment">
+    tools:context=".LookFor.LookForFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/look_for_const_top"

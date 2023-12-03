@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_look_for_fab_click"
     android:background="@color/white"
-    tools:context=".LookForFabClickActivity">
+    tools:context=".LookFor.LookForFabClickActivity">
 
     <ScrollView
         android:layout_width="match_parent"
