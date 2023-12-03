@@ -14,8 +14,8 @@
         android:layout_weight="1"
         android:fillViewport="true"
         tools:ignore="SpeakableTextPresentCheck"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-276dp">
+        tools:layout_editor_absoluteX="-86dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
