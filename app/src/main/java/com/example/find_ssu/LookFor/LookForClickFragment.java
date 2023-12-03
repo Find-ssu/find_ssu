@@ -12,7 +12,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.find_ssu.Chat.ChatActivity;
+import com.example.find_ssu.R;
 import com.example.find_ssu.databinding.FragmentLookForClickBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class LookForClickFragment extends Fragment {
@@ -55,6 +57,7 @@ public class LookForClickFragment extends Fragment {
         View rootview =binding.getRoot();
         ImageView back = binding.lookForClickBackIv;
         ImageView chatBtn = binding.lookForChatBtn;
+        hideBottomNavigation(true);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,5 +83,19 @@ public class LookForClickFragment extends Fragment {
             Glide.with(binding.getRoot().getContext()).load(image).into(binding.lookForClickIv);}
         return rootview;
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        hideBottomNavigation(false);
+    }
+
+    public void hideBottomNavigation(Boolean bool) {
+        BottomNavigationView bottomNavigation = getActivity().findViewById(R.id.navigationView);
+        if (bool == true)
+            bottomNavigation.setVisibility(View.GONE);
+        else
+            bottomNavigation.setVisibility(View.VISIBLE);
     }
 }

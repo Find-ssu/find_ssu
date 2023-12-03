@@ -43,6 +43,8 @@
             android:id="@+id/look_for_search_word_et"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:singleLine="true"
+            android:maxLines="1"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="20dp"

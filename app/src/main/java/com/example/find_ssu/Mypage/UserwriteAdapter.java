@@ -19,7 +19,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.find_ssu.Find.FindClickFragment;
 import com.example.find_ssu.Find.FindPost;
+import com.example.find_ssu.LookFor.LookForClickFragment;
 import com.example.find_ssu.LookFor.LookForPost;
 import com.example.find_ssu.R;
 import com.google.android.gms.tasks.OnFailureListener;
