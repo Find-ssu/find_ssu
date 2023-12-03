@@ -1,4 +1,4 @@
-package com.example.find_ssu.Find;
+package com.example.find_ssu;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
