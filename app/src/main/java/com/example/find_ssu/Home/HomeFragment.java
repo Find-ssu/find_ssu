@@ -122,7 +122,6 @@ public class HomeFragment extends Fragment {
 
         loadDataFromFirestore();
 
-
     }
 
     private void loadDataFromFirestore() {
