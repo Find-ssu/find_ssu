@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:id="@+id/fragment_find_click"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FindClickFragment">
+    tools:context=".Find.FindClickFragment">
 
     <ImageView
         android:id="@+id/find_click_back_iv"
