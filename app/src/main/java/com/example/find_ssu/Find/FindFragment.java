@@ -11,6 +11,8 @@ import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +23,12 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.example.find_ssu.databinding.FragmentFindBinding;
 import com.example.find_ssu.databinding.ItemviewBinding;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 
 public class FindFragment extends Fragment {
@@ -30,7 +36,7 @@ public class FindFragment extends Fragment {
     private static final String TAG = "FINDSSU";
     private FirebaseFirestore db;
     FragmentFindBinding findBinding;
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,40 +54,53 @@ public class FindFragment extends Fragment {
             }
         });
 
-        findBinding.findSearchIb.setOnClickListener(new View.OnClickListener() {
+        // EditText에서 텍스트가 변경될 때 호출되는 메서드
+        findBinding.findSearchWordEt.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                String searchText = findBinding.findSearchWordEt.getText().toString().trim(); // EditText에서 검색어 가져오기
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                // 검색어에 따라 Firestore 쿼리 업데이트
-                Query query;
-                if (!searchText.isEmpty()) {
-                    // 검색어가 비어 있지 않으면, 검색어를 이용하여 Firestore 쿼리 수정
-                    query = FirebaseFirestore.getInstance()
+            }
+
+            Query originalQuery = FirebaseFirestore.getInstance()
+                    .collection("FindPost")
+                    .orderBy("timestamp", Query.Direction.DESCENDING);
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = charSequence.toString().trim();
+
+                if (searchText.isEmpty()) {
+                    PagingConfig config = new PagingConfig(4, 2, false);
+                    FirestorePagingOptions<FindPost> newOptions = new FirestorePagingOptions.Builder<FindPost>()
+                            .setLifecycleOwner(getViewLifecycleOwner())
+                            .setQuery(originalQuery, config, FindPost.class)
+                            .build();
+
+                    adapter.updateOptions(newOptions); // 어댑터에 새로운 옵션을 업데이트
+
+                } else {
+                    Query filteredQuery = FirebaseFirestore.getInstance()
                             .collection("FindPost")
                             .orderBy("timestamp", Query.Direction.DESCENDING)
-                            .whereEqualTo("name", searchText);
+                            .whereEqualTo("name", searchText); // 여기서 "name"은 검색하려는 필드명입니다.
+
+                    PagingConfig config = new PagingConfig(4, 2, false);
+                    FirestorePagingOptions<FindPost> newOptions = new FirestorePagingOptions.Builder<FindPost>()
+                            .setLifecycleOwner(getViewLifecycleOwner())
+                            .setQuery(filteredQuery, config, FindPost.class)
+                            .build();
+
+                    adapter.updateOptions(newOptions); // 어댑터에 새로운 옵션을 업데이트
                 }
+            }
 
-                else {
-                    // 검색어가 비어 있으면 기본 쿼리 사용
-                    query = FirebaseFirestore.getInstance()
-                            .collection("FindPost")
-                            .orderBy("timestamp", Query.Direction.DESCENDING);
-                }
 
-                PagingConfig config = new PagingConfig(4, 2, false);
-                FirestorePagingOptions<FindPost> updatedOptions = new FirestorePagingOptions.Builder<FindPost>()
-                        .setLifecycleOwner(getViewLifecycleOwner())
-                        .setQuery(query, config, FindPost.class)
-                        .build();
+            @Override
+            public void afterTextChanged(Editable editable) {
 
-                // FirestorePagingAdapter에 새로운 FirestorePagingOptions 설정
-                adapter.updateOptions(updatedOptions);
-                adapter.notifyDataSetChanged();
-                Log.d(TAG, "옵션업데이트");
             }
         });
+
+
 
         //지도버튼 클릭이벤트
         findBinding.findMapBtn.setOnClickListener(new View.OnClickListener() {

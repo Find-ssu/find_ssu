@@ -39,6 +39,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     }
 
+    public void updateList(ArrayList<HomePost> newList) {
+        items.clear();
+        items.addAll(newList);
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public int getItemCount() {
         return items.size();
