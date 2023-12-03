@@ -10,6 +10,7 @@ import java.util.List;
 
 public class FindPost {
     private String name;
+
     private String location;
     private String location_detail;
     private String date;

@@ -12,10 +12,14 @@ import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.find_ssu.Find.FindPost;
 import com.example.find_ssu.databinding.FragmentLookForBinding;
 import com.example.find_ssu.databinding.ItemviewBinding;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
@@ -42,6 +46,52 @@ public class LookForFragment extends Fragment {
                 // 액티비티 전환
                 Intent intent = new Intent(requireContext(), LookForFabClickActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        // EditText에서 텍스트가 변경될 때 호출되는 메서드
+        lookForBinding.lookForSearchWordEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            Query originalQuery = FirebaseFirestore.getInstance()
+                    .collection("LookForPost")
+                    .orderBy("timestamp", Query.Direction.DESCENDING);
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = charSequence.toString().trim();
+
+                if (searchText.isEmpty()) {
+                    PagingConfig config = new PagingConfig(4, 2, false);
+                    FirestorePagingOptions<LookForPost> newOptions = new FirestorePagingOptions.Builder<LookForPost>()
+                            .setLifecycleOwner(getViewLifecycleOwner())
+                            .setQuery(originalQuery, config, LookForPost.class)
+                            .build();
+
+                    adapter.updateOptions(newOptions); // 어댑터에 새로운 옵션을 업데이트
+
+                } else {
+                    Query filteredQuery = FirebaseFirestore.getInstance()
+                            .collection("LookForPost")
+                            .orderBy("timestamp", Query.Direction.DESCENDING)
+                            .whereEqualTo("name", searchText);
+
+                    PagingConfig config = new PagingConfig(4, 2, false);
+                    FirestorePagingOptions<LookForPost> newOptions = new FirestorePagingOptions.Builder<LookForPost>()
+                            .setLifecycleOwner(getViewLifecycleOwner())
+                            .setQuery(filteredQuery, config, LookForPost.class)
+                            .build();
+
+                    adapter.updateOptions(newOptions); // 어댑터에 새로운 옵션을 업데이트
+                }
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
