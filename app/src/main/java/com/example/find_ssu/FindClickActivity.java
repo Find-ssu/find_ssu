@@ -2,6 +2,7 @@ package com.example.find_ssu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class FindClickActivity extends AppCompatActivity {
     static String date;
     static String more;
     static String image;
+    static String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,15 @@ public class FindClickActivity extends AppCompatActivity {
             }
         });
 
+        binding.findChatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FindClickActivity.this, ChatActivity.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+            }
+        });
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             name = extras.getString("name");
@@ -41,6 +52,7 @@ public class FindClickActivity extends AppCompatActivity {
             date = extras.getString("date");
             more = extras.getString("more");
             image = extras.getString("image");
+            uid = extras.getString("uid");
         }
 
         binding.findClickNameInputTv.setText(name);

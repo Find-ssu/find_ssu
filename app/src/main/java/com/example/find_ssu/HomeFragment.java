@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
 
     private void loadDataFromFirestore() {
         db.collection("InstagramData")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .orderBy("timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

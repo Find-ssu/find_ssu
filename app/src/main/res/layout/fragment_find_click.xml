@@ -34,6 +34,16 @@
         />
 
     <ImageView
+        android:id="@+id/find_chat_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="23dp"
+        android:src="@drawable/chat_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="48dp"/>
+
+    <ImageView
         android:id="@+id/find_click_warning_iv"
         android:layout_width="350dp"
         android:layout_height="80dp"

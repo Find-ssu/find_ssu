@@ -47,6 +47,7 @@ public class MyPageFragment extends Fragment {
 
         TextView logoutButton = view.findViewById(R.id.my_page_logout_tv);
         TextView writeListButton = view.findViewById(R.id.my_page_write_list_tv);
+        TextView chatBtn = view.findViewById((R.id.my_page_chat_tv));
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +57,14 @@ public class MyPageFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 signOut();
+            }
+        });
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), ChatListActivity.class);
+                startActivity(intent);
             }
         });
 

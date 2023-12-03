@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -199,6 +200,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             intent.putExtra("date", findPost.getDate());
                             intent.putExtra("more", findPost.getMore());
                             intent.putExtra("image", findPost.getImage());
+                            intent.putExtra("uid",findPost.getUid());
 
                             startActivity(intent);
                         }
