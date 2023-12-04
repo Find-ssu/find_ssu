@@ -63,6 +63,8 @@ public class ChatListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ChatListActivity.this, ChatingRoomActivity.class);
                 intent.putExtra("superdocumentId", chatItem.getSuperdocumentId());
                 intent.putExtra("uid1", chatItem.getUid1());
+                intent.putExtra("name",chatItem.getName());
+                intent.putExtra("where",chatItem.getWhere());
                 startActivity(intent);
             }
         });
@@ -73,7 +75,7 @@ public class ChatListActivity extends AppCompatActivity {
 
     private void getAllDocumentsInACollection(String user) {
         db.collection("Chat")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .orderBy("time", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -94,8 +96,10 @@ public class ChatListActivity extends AppCompatActivity {
                                 String uid2 = document.getString("uid2");
                                 String documentId = document.getString("documentId");
                                 String superdocumentId = document.getString("superdocumentId");
+                                String name = document.getString("name");
+                                String where = document.getString("where");
 
-                                ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId);
+                                ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId, name, where);
                                 adapter.addItem(chatItem);
                             }
                         }

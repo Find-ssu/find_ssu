@@ -15,8 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="45dp"
-        />
+        android:layout_marginTop="45dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -41,11 +40,69 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="48dp"/>
 
+    <ImageView
+        android:id="@+id/chat_click_warning_iv"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/warning_bg_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    <TextView
+        android:id="@+id/chat_where_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:fontFamily="@font/pretendard_extra_bold"
+        android:text="찾아가세요"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@+id/chat_click_warning_iv"
+        app:layout_constraintTop_toTopOf="@+id/chat_click_warning_iv" />
+
+    <TextView
+        android:id="@+id/chat_warning_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/pretendard_semi_bold"
+        android:text="게시판에 작성된 글을 통해 시작된 쪽지입니다."
+        android:textSize="14dp"
+        app:layout_constraintStart_toEndOf="@+id/chat_where_tv"
+        app:layout_constraintTop_toTopOf="@+id/chat_click_warning_iv" />
+
+    <TextView
+        android:id="@+id/chat_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="15dp"
+        android:fontFamily="@font/pretendard_semi_bold"
+        android:text="물품명 :"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@+id/chat_click_warning_iv"
+        app:layout_constraintTop_toTopOf="@+id/chat_click_warning_iv" />
+
+    <TextView
+        android:id="@+id/chat_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/pretendard_extra_bold"
+        android:text="에어팟"
+        android:textSize="14dp"
+        app:layout_constraintStart_toEndOf="@+id/chat_tv"
+        app:layout_constraintTop_toTopOf="@+id/chat_click_warning_iv" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chating_room_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="115dp"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="192dp"></androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

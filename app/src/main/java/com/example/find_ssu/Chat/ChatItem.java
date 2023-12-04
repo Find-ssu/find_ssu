@@ -12,17 +12,22 @@ public class ChatItem {
     String uid2;
     String message;
     String documentId;
-
-    String timestamp; // server timestamp
+    String timestamp;
     String superdocumentId;
+    String name;
+    String where;
+    @ServerTimestamp
+    private Timestamp time;
 
-    public ChatItem(String uid1, String uid2, String message, String documentId, String timestamp, String superdocumentId){
+    public ChatItem(String uid1, String uid2, String message, String documentId, String timestamp, String superdocumentId, String name, String where){
         this.uid1 = uid1;
         this.uid2 = uid2;
         this.message = message;
         this.documentId = documentId;
         this.timestamp= timestamp;
         this.superdocumentId = superdocumentId;
+        this.name = name;
+        this.where = where;
     }
 
     public String getUid1(){return uid1;}
@@ -33,4 +38,7 @@ public class ChatItem {
         return timestamp;
     }
     public String getSuperdocumentId(){return superdocumentId;}
+    public String getName(){return name;}
+    public String getWhere(){return where;}
+    public Timestamp getTime(){return time;}
 }
