@@ -38,7 +38,8 @@ public class FindClickActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(FindClickActivity.this, ChatActivity.class);
                 intent.putExtra("uid", uid);
-                Log.d("name", uid);
+                intent.putExtra("name", name);
+                intent.putExtra("where", "찾아가세요");
                 startActivity(intent);
             }
         });

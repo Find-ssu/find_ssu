@@ -72,6 +72,8 @@ public class FindClickFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), ChatActivity.class);
                 intent.putExtra("uid", uid);
+                intent.putExtra("name", name);
+                intent.putExtra("where", "찾아가세요");
                 startActivity(intent);
             }
         });

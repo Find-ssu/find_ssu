@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,18 +41,28 @@ public class ChatingRoomActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String superdocumentId = intent.getStringExtra("superdocumentId");
-        String uid1 = intent.getStringExtra("uid1");
+        String name = intent.getStringExtra("name");
+        String where = intent.getStringExtra("where");
 
-        String sender = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String sender = FirebaseAuth.getInstance().getCurrentUser().getUid(); //현재사용자(보내는이)
 
-        Log.d("dd",superdocumentId);
-        Log.d("dd",sender);
+        //받는 사람
         String RemoveSender = superdocumentId.replace(sender, "");
-        String receiver = RemoveSender.replace("-","");
+        String Removewhere = RemoveSender.replace(where, "");
+        String receiver = Removewhere.replace("-","");
 
+        //물품명
+        TextView setname = findViewById(R.id.chat_name_tv);
+        setname.setText(name);
+
+        //어느 게시판에서 보냈는지
+        TextView setwhere = findViewById(R.id.chat_where_tv);
+        setwhere.setText(where);
 
         ImageView backBtn = findViewById(R.id.chating_room_back_btn);
         ImageView chatBtn = findViewById((R.id.chating_room_chat_btn));
+
+        //백버튼 클릭시 종료
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,21 +70,26 @@ public class ChatingRoomActivity extends AppCompatActivity {
             }
         });
 
+        //어댑터 리사이클러뷰 연결
         chating = findViewById(R.id.chating_room_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         chating.setLayoutManager(layoutManager);
         adapter = new ChatAdapter(ChatingRoomActivity.this, list);
         chating.setAdapter(adapter);
 
+        //쪽지 다시 보내기
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChatingRoomActivity.this, ChatActivity.class);
                 intent.putExtra("uid", receiver);
+                intent.putExtra("name", name);
+                intent.putExtra("where", where);
                 startActivity(intent);
             }
         });
 
+        //문서 불러오기
         getAllDocumentsInACollection(superdocumentId);
 
     }
@@ -92,7 +108,7 @@ public class ChatingRoomActivity extends AppCompatActivity {
                             return;
                         }
 
-                        list.clear(); // Clear the list first to avoid duplicate items
+                        list.clear();
 
                         for (QueryDocumentSnapshot document : value) {
                             String message = document.getString("message");
@@ -101,8 +117,10 @@ public class ChatingRoomActivity extends AppCompatActivity {
                             String uid2 = document.getString("uid2");
                             String documentId = document.getString("documentId");
                             String superdocumentId = document.getString("superdocumentId");
+                            String name = document.getString("name");
+                            String where = document.getString("where");
 
-                            ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId);
+                            ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId, name, where);
                             adapter.addItem(chatItem);
                         }
 
