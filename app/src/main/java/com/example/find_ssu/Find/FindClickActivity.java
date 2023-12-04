@@ -19,6 +19,7 @@ public class FindClickActivity extends AppCompatActivity {
     static String more;
     static String image;
     static String uid;
+    static String documentuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class FindClickActivity extends AppCompatActivity {
                 intent.putExtra("uid", uid);
                 intent.putExtra("name", name);
                 intent.putExtra("where", "찾아가세요");
+                intent.putExtra("documentId", documentuid);
                 startActivity(intent);
             }
         });
@@ -53,6 +55,7 @@ public class FindClickActivity extends AppCompatActivity {
             more = extras.getString("more");
             image = extras.getString("image");
             uid = extras.getString("uid");
+            documentuid = extras.getString("documentuid");
         }
 
         binding.findClickNameInputTv.setText(name);

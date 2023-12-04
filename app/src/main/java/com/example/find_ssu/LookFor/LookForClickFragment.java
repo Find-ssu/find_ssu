@@ -26,6 +26,7 @@ public class LookForClickFragment extends Fragment {
     static String more;
     static String image;
     private String uid;
+    private String documentuid;
 
     public static LookForClickFragment newInstance(LookForPost lookForPost) {
         LookForClickFragment fragment = new LookForClickFragment();
@@ -36,6 +37,7 @@ public class LookForClickFragment extends Fragment {
         fragment.date = lookForPost.getDate().toString();
         fragment.more = lookForPost.getMore().toString();
         fragment.uid = lookForPost.getUid().toString();
+        fragment.documentuid = lookForPost.getDocumentuid().toString();
         if(lookForPost.getImage()==null)
             fragment.image=null;
         else
@@ -73,6 +75,7 @@ public class LookForClickFragment extends Fragment {
                 intent.putExtra("uid", uid);
                 intent.putExtra("name", name);
                 intent.putExtra("where", "찾아요");
+                intent.putExtra("documentId",documentuid);
                 startActivity(intent);
             }
         });
