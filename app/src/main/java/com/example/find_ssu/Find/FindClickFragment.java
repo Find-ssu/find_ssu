@@ -27,6 +27,7 @@ public class FindClickFragment extends Fragment {
      static String more;
      static String image;
      static String uid;
+     static String documentuid;
 
     public static FindClickFragment newInstance(FindPost findPost) {
         FindClickFragment fragment = new FindClickFragment();
@@ -38,6 +39,7 @@ public class FindClickFragment extends Fragment {
         fragment.date = findPost.getDate().toString();
         fragment.more = findPost.getMore().toString();
         fragment.uid = findPost.getUid().toString();
+        fragment.documentuid = findPost.getDocumentuid().toString();
         if(findPost.getImage()==null)
             fragment.image=null;
         else
@@ -74,6 +76,7 @@ public class FindClickFragment extends Fragment {
                 intent.putExtra("uid", uid);
                 intent.putExtra("name", name);
                 intent.putExtra("where", "찾아가세요");
+                intent.putExtra("documentId",documentuid);
                 startActivity(intent);
             }
         });
