@@ -65,6 +65,7 @@ public class ChatListActivity extends AppCompatActivity {
                 intent.putExtra("uid1", chatItem.getUid1());
                 intent.putExtra("name",chatItem.getName());
                 intent.putExtra("where",chatItem.getWhere());
+                intent.putExtra("documentId", chatItem.getDocumentId());
                 startActivity(intent);
             }
         });
@@ -98,8 +99,9 @@ public class ChatListActivity extends AppCompatActivity {
                                 String superdocumentId = document.getString("superdocumentId");
                                 String name = document.getString("name");
                                 String where = document.getString("where");
+                                String subdocumentId = document.getString("subdocumentId");
 
-                                ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId, name, where);
+                                ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId, name, where, subdocumentId);
                                 adapter.addItem(chatItem);
                             }
                         }

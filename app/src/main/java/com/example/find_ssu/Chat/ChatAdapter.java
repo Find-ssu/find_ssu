@@ -64,7 +64,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         }
 
         public void setItem(ChatItem item){
-            if(item.getDocumentId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            //문서 아이디에서 보낸이 추출
+            int idx = item.getSubdocumentId().indexOf("_");
+            String writer = item.getSubdocumentId().substring(0,idx);
+
+            if(writer.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 chat_sender.setText("보낸 쪽지");
                 chat_sender.setTextColor(Color.parseColor("#000000"));
             }else {
