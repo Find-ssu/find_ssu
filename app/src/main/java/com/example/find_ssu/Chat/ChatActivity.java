@@ -43,12 +43,14 @@ public class ChatActivity extends AppCompatActivity {
 
         String where = intent.getStringExtra("where");
         String name = intent.getStringExtra("name");
+        String documentId = intent.getStringExtra("documentId");
 
         String uid1 = intent.getStringExtra("uid");//유저 아이디 1 -> 글쓴이
         String uid2 = FirebaseAuth.getInstance().getCurrentUser().getUid(); //유저 아이디 2 -> 보내는이
 
         //글쓴이와 보내는이 아이디값 비교해서 문서(채팅방) 만들기 -> 절대값을 만들기 위해
-        String chatroom = uid1.compareTo(uid2) < 0 ? uid1 + "-" + uid2 + where : uid2 + "-" + uid1 + where;
+        //유저 아아디 두개 더하고 게시글의 문서 id를 합침
+        String chatroom = uid1.compareTo(uid2) < 0 ? uid1 + "-" + uid2 + documentId : uid2 + "-" + uid1 + documentId;
 
         //Cloud Firestore 인스턴스 초기화
         initializeCloudFirestore();
@@ -75,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
                                 Toast.makeText(ChatActivity.this, "자신에게는 쪽지를 보낼 수 없습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
                             }else {
-                                addDataFromCustomObject(uid1, uid2, chatroom, name, where);
+                                addDataFromCustomObject(uid1, uid2, chatroom, name, where, documentId);
                             }
                         } else {
                             Log.w("chat", "Error getting documents.", task.getException());
@@ -91,12 +93,10 @@ public class ChatActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void addDataFromCustomObject(String uid1, String uid2, String chatroom, String name, String where) {
+    public void addDataFromCustomObject(String uid1, String uid2, String chatroom, String name, String where, String documentId) {
         String message = binding.chatMessage.getText().toString();
         String supperdocumentId = chatroom; //글쓴이 + 쪽지 작성자 아이디
-        String subdocument = FirebaseAuth.getInstance().getCurrentUser().getUid() + "_" + System.currentTimeMillis();
-
-        String documentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String subdocumentId = FirebaseAuth.getInstance().getCurrentUser().getUid() + "_" + System.currentTimeMillis();
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
@@ -104,7 +104,7 @@ public class ChatActivity extends AppCompatActivity {
 
         Log.d("name", name);
         Log.d("where", where);
-        ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, supperdocumentId, name, where);
+        ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, supperdocumentId, name, where, subdocumentId);
         Log.d("name", chatItem.getName());
 
         db.collection("Chat").document(supperdocumentId).set(chatItem);
@@ -112,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
         db.collection("Chat")
                 .document(supperdocumentId)
                 .collection("subchat")
-                .document(subdocument)
+                .document(subdocumentId)
                 .set(chatItem)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

@@ -43,13 +43,17 @@ public class ChatingRoomActivity extends AppCompatActivity {
         String superdocumentId = intent.getStringExtra("superdocumentId");
         String name = intent.getStringExtra("name");
         String where = intent.getStringExtra("where");
+        String documentId = intent.getStringExtra("documentId");
 
         String sender = FirebaseAuth.getInstance().getCurrentUser().getUid(); //현재사용자(보내는이)
 
         //받는 사람
-        String RemoveSender = superdocumentId.replace(sender, "");
-        String Removewhere = RemoveSender.replace(where, "");
-        String receiver = Removewhere.replace("-","");
+        String RemoveSender = superdocumentId.replaceFirst(sender, "");
+        Log.d("reciver", RemoveSender);
+        String RemoveDocumentId = RemoveSender.replace(documentId, "");
+        Log.d("reciver", RemoveDocumentId);
+        String receiver = RemoveDocumentId.replace("-","");
+        Log.d("reciver", receiver);
 
         //물품명
         TextView setname = findViewById(R.id.chat_name_tv);
@@ -85,6 +89,7 @@ public class ChatingRoomActivity extends AppCompatActivity {
                 intent.putExtra("uid", receiver);
                 intent.putExtra("name", name);
                 intent.putExtra("where", where);
+                intent.putExtra("documentId", documentId);
                 startActivity(intent);
             }
         });
@@ -119,8 +124,9 @@ public class ChatingRoomActivity extends AppCompatActivity {
                             String superdocumentId = document.getString("superdocumentId");
                             String name = document.getString("name");
                             String where = document.getString("where");
+                            String subdocumentId = document.getString("subdocumentId");
 
-                            ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId, name, where);
+                            ChatItem chatItem = new ChatItem(uid1, uid2, message, documentId, timestamp, superdocumentId, name, where, subdocumentId);
                             adapter.addItem(chatItem);
                         }
 
