@@ -128,9 +128,9 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(context, "게시물 삭제 완료", Toast.LENGTH_SHORT).show();
-                                    if (context instanceof Activity) {
-                                        ((Activity) context).finish();
-                                    }
+//                                    if (context instanceof Activity) {
+//                                        ((Activity) context).finish();
+//                                    }
 
                                 }
                             })
@@ -153,11 +153,11 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
                                             Toast.makeText(context, "게시물 삭제 실패", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-
-
                             dialog.dismiss();
+                            ((AppCompatActivity) view.getContext()).finish();
                             Intent intent = new Intent((AppCompatActivity)view.getContext(), UserWriteActivity.class);
-                            context.startActivity(intent);}
+                            context.startActivity(intent);
+                        }
                     });
 
                     dialog.show();
