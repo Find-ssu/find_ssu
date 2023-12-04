@@ -95,9 +95,11 @@ public class LookForClickFragment extends Fragment {
 
     public void hideBottomNavigation(Boolean bool) {
         BottomNavigationView bottomNavigation = getActivity().findViewById(R.id.navigationView);
-        if (bool == true)
-            bottomNavigation.setVisibility(View.GONE);
-        else
-            bottomNavigation.setVisibility(View.VISIBLE);
+        if(bottomNavigation!=null) {
+            if (bool == true)
+                bottomNavigation.setVisibility(View.GONE);
+            else
+                bottomNavigation.setVisibility(View.VISIBLE);
+        }
     }
 }
