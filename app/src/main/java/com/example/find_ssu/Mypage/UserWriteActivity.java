@@ -1,6 +1,7 @@
 package com.example.find_ssu.Mypage;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +21,10 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -29,49 +33,40 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserWriteActivity<T> extends AppCompatActivity {
+    private static final String TAG = "FINDSSU";
     ActivityUserWriteBinding binding;
     private FirebaseFirestore db;
     private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityUserWriteBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot()); // 액티비티 레이아웃 설정
-
+        setContentView(binding.getRoot());
         initializeCloudFirestore();
-        db.collection("FindPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<T> dataList = new ArrayList<>();
-
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        FindPost data = document.toObject(FindPost.class);
-                        dataList.add((T) data);
+        db.collection("FindPost").whereEqualTo("uid",uid)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
+                        List<T> UserwriteList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : value) {
+                            FindPost Item = document.toObject(FindPost.class);
+                            UserwriteList.add((T) Item);
+                        }
+                        Collections.reverse(UserwriteList);
+                        // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
+                        displayDataInRecyclerView(UserwriteList);
                     }
-                    Collections.reverse(dataList);
-                    // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
-                    displayDataInRecyclerView(dataList);
-                }
-
-            }
-        });
+                });
 
         ImageButton backButton = binding.userWriteClickBackIv;
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // 현재 엑티비티 종료
-
-//                // 메인 엑티비티를 시작하는 Intent 생성
-//                Intent intent = new Intent(v.getContext(), MainActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // 메인 엑티비티가 이미 스택에 있으면 해당 엑티비티 위에 새로운 인스턴스를 생성하지 않도록 함
-//                v.getContext().startActivity(intent); // 메인 엑티비티 시작
+                finish();
             }
         });
-
         TextView find=binding.userWriteFind;
         TextView lookfor=binding.userWriteLookfor;
         find.setOnClickListener(new View.OnClickListener() {
@@ -80,24 +75,20 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                 find.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blue));
                 lookfor.setTextColor(ContextCompat.getColor(view.getContext(), R.color.gray));
                 initializeCloudFirestore();
-                db.collection("FindPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                db.collection("FindPost").whereEqualTo("uid",uid).addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<T> dataList = new ArrayList<>();
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                FindPost data = document.toObject(FindPost.class);
-                                dataList.add((T) data);
-                            }
-                            Collections.reverse(dataList);
-                            // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
-                            displayDataInRecyclerView(dataList);
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
+                        List<T> UserwriteList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : value) {
+                            FindPost Item = document.toObject(FindPost.class);
+                            UserwriteList.add((T) Item);
                         }
-
+                        Collections.reverse(UserwriteList);
+                        // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
+                        displayDataInRecyclerView(UserwriteList);
                     }
                 });
-
             }
         });
 
@@ -108,31 +99,26 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                 find.setTextColor(ContextCompat.getColor(view.getContext(), R.color.gray));
                 lookfor.setTextColor(ContextCompat.getColor(view.getContext(), R.color.blue));
                 initializeCloudFirestore();
-                db.collection("LookForPost").whereEqualTo("uid",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                db.collection("LookForPost").whereEqualTo("uid",uid).addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<T> dataList = new ArrayList<>();
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                LookForPost data = document.toObject(LookForPost.class);
-                                dataList.add((T)data);
-                            }
-                            Collections.reverse(dataList);
-                            // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
-                            displayDataInRecyclerView(dataList);
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
+                        List<T> UserwriteList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : value) {
+                            LookForPost Item = document.toObject(LookForPost.class);
+                            UserwriteList.add((T) Item);
                         }
-
+                        Collections.reverse(UserwriteList);
+                        // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
+                        displayDataInRecyclerView(UserwriteList);
                     }
                 });
             }
         });
-
-
     }
-    private void displayDataInRecyclerView(List<T> dataList) {
+    private void displayDataInRecyclerView(List<T> UserwriteList) {
         RecyclerView recyclerView = binding.userwriteRv;
-        UserwriteAdapter adapter = new UserwriteAdapter(dataList,this);
+        UserwriteAdapter adapter = new UserwriteAdapter(UserwriteList,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
