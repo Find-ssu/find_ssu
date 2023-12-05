@@ -15,6 +15,7 @@ import com.example.find_ssu.Chat.ChatActivity;
 import com.example.find_ssu.R;
 import com.example.find_ssu.databinding.FragmentLookForClickBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class LookForClickFragment extends Fragment {
@@ -60,6 +61,13 @@ public class LookForClickFragment extends Fragment {
         ImageView back = binding.lookForClickBackIv;
         ImageView chatBtn = binding.lookForChatBtn;
         hideBottomNavigation(true);
+
+        int idx = documentuid.indexOf("_");
+        String writer = documentuid.substring(0,idx);
+
+        if(writer.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            chatBtn.setVisibility(View.INVISIBLE);
+        }
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
