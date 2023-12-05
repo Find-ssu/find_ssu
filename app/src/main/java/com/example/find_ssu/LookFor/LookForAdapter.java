@@ -95,6 +95,13 @@ public class LookForAdapter extends RecyclerView.Adapter<LookForAdapter.ViewHold
                         .load(imageUrl)
                         .into(item_iv);
             }
+            else{
+                int itemNullResourceId = R.drawable.item_null;
+                Glide.with(itemView.getContext())
+                        .load(itemNullResourceId)
+                        .into(item_iv);
+
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

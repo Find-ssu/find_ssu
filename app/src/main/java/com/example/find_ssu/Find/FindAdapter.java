@@ -1,6 +1,7 @@
 package com.example.find_ssu.Find;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -94,6 +96,13 @@ public class FindAdapter extends RecyclerView.Adapter<FindAdapter.ViewHolder> {
                 Glide.with(itemView.getContext())
                         .load(imageUrl)
                         .into(item_iv);
+            }
+            else{
+                int itemNullResourceId = R.drawable.item_null;
+                Glide.with(itemView.getContext())
+                        .load(itemNullResourceId)
+                        .into(item_iv);
+
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
