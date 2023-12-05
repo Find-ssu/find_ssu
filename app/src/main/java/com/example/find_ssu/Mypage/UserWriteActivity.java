@@ -36,7 +36,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
     ActivityUserWriteBinding binding;
     private FirestorePagingAdapter<FindPost, FindPostViewHolder> adapter;
     private FirebaseFirestore db;
-    private String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
     protected void onCreate(Bundle savedInstanceState) {
