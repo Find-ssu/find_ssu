@@ -28,7 +28,9 @@ import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.example.find_ssu.databinding.FragmentFindBinding;
 import com.example.find_ssu.databinding.ItemviewBinding;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -153,26 +155,25 @@ public class FindFragment extends Fragment {
     private void loadDataFromFirestore() {
         db.collection("FindPost")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
                         list.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String name = document.getString("name");
-                            String location = document.getString("location");
-                            String location_detail = document.getString("location_detail");
-                            String date = document.getString("date");
-                            String more = document.getString("more");
-                            String img = document.getString("image");
-                            String documentuid = document.getString("documentuid");
-                            String uid = document.getString("uid");
+                        for (QueryDocumentSnapshot document : value) {
+                                String name = document.getString("name");
+                                String location = document.getString("location");
+                                String location_detail = document.getString("location_detail");
+                                String date = document.getString("date");
+                                String more = document.getString("more");
+                                String image = document.getString("image");
+                                String documentuid = document.getString("documentuid");
+                                String uid = document.getString("uid");
 
-                            FindPost findPost = new FindPost(name, location, location_detail, date, more, img, documentuid, uid);
-                            adapter.addItem(findPost);
-                        }
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                FindPost findPost = new FindPost(name, location, location_detail, date, more, image, documentuid, uid);
+                                adapter.addItem(findPost);
+                            }
+                            adapter.notifyDataSetChanged();
                     }
                 });
     }

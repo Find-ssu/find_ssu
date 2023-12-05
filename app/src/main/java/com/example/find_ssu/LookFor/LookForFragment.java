@@ -28,9 +28,12 @@ import com.example.find_ssu.databinding.FragmentLookForBinding;
 import com.example.find_ssu.databinding.ItemviewBinding;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -144,11 +147,11 @@ public class LookForFragment extends Fragment {
     private void loadDataFromFirestore() {
         db.collection("LookForPost")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         list.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (QueryDocumentSnapshot document : value) {
                             String name = document.getString("name");
                             String location = document.getString("location");
                             String date = document.getString("date");
@@ -160,8 +163,6 @@ public class LookForFragment extends Fragment {
                             adapter.addItem(lookForPost);
                         }
                         adapter.notifyDataSetChanged();
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
     }
