@@ -27,20 +27,18 @@ import com.example.find_ssu.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.List;
 
 public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.ViewHolder> {
-    private List<T> dataList;
+    private List<T> UserwriteList;
     public static Context context;
     private static FirebaseFirestore db;
 
-
-
-    public UserwriteAdapter(List<T> dataList, Context context){
-        this.dataList = dataList;
+    public UserwriteAdapter(List<T> UserwriteList, Context context){
+        this.UserwriteList = UserwriteList;
         this.context = context;
-
     }
 
 
@@ -53,22 +51,21 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        T data = dataList.get(position);
-        if (data instanceof FindPost) {
-            holder.bind((FindPost) data);
-            holder.model=(FindPost)data;
-        } else if (data instanceof LookForPost) {
-            holder.bind((LookForPost) data);
-            holder.model=(LookForPost)data;
+        //객체 타입에 따라 각각 bind함수 호출
+        T Item = UserwriteList.get(position);
+        if (Item instanceof FindPost) {
+            holder.bind((FindPost) Item);
+            holder.model=(FindPost)Item;
+        } else if (Item instanceof LookForPost) {
+            holder.bind((LookForPost) Item);
+            holder.model=(LookForPost)Item;
         }
-
     }
 
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return UserwriteList.size();
     }
 
     public static class ViewHolder<T> extends RecyclerView.ViewHolder {
@@ -81,17 +78,17 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
         // ViewHolder 클래스 정의
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            // 뷰 초기화 작업 수행
+            // 뷰 초기화 작업
             user_write_iv=itemView.findViewById(R.id.item_user_write_iv);
             user_write_tv=itemView.findViewById(R.id.item_user_write_name_tv);
             user_write_date_tv=itemView.findViewById(R.id.item_user_write_date_input_tv);
             user_write_del_btn=itemView.findViewById(R.id.item_user_write_del_btn);
+
+            //아이템 클릭 리스너
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    //프레그먼트 전환
-                    // 전환할 프래그먼트 인스턴스 생성
+                    //화면 전환
                     FragmentManager fragmentManager = ((AppCompatActivity)view.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     if(model instanceof FindPost)
@@ -102,6 +99,7 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
                     fragmentTransaction.commit();
                 }
             });
+            //아이템 삭제
             user_write_del_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -112,78 +110,79 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
                     Button okayButton = dialogView.findViewById(R.id.dialog_okay_btn);
                     builder.setView(dialogView);
                     AlertDialog dialog = builder.create();
+                    //아이템 삭제 취소 클릭 리스너
                     cancelButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
                         }
                     });
+                    //아이템 삭제 클릭 리스너
                     okayButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //파이어베이스 삭제
                             db = FirebaseFirestore.getInstance();
-                            db.collection("FindPost").document(document_uid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            if(model instanceof FindPost) {
+                                db.collection("FindPost").document(document_uid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(context, "게시물 삭제 완료", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(context, "게시물 삭제 실패", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                            else if (model instanceof LookForPost) {
+                                db.collection("LookForPost").document(document_uid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
 
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(context, "게시물 삭제 완료", Toast.LENGTH_SHORT).show();
-//                                    if (context instanceof Activity) {
-//                                        ((Activity) context).finish();
-//                                    }
-
-                                }
-                            })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(context, "게시물 삭제 실패", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                            db.collection("LookForPost").document(document_uid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(context, "게시물 삭제 완료", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(context, "게시물 삭제 실패", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(context, "게시물 삭제 완료", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(context, "게시물 삭제 실패", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
                             dialog.dismiss();
-                            ((AppCompatActivity) view.getContext()).finish();
-                            Intent intent = new Intent((AppCompatActivity)view.getContext(), UserWriteActivity.class);
-                            context.startActivity(intent);
+//                            ((AppCompatActivity) view.getContext()).finish();
+//                            Intent intent = new Intent((AppCompatActivity)view.getContext(), UserWriteActivity.class);
+//                            context.startActivity(intent);
                         }
                     });
-
                     dialog.show();
                 }
             });
 
         }
-
-        public void bind(FindPost data) {
+        //FindPost객체 바인딩 함수
+        public void bind(FindPost Item) {
                 // 데이터를 화면의 뷰에 바인딩하는 작업 수행
-                user_write_tv.setText(data.getName());
-                user_write_date_tv.setText(data.getDate());
-                document_uid= data.getDocumentuid();
+                user_write_tv.setText(Item.getName());
+                user_write_date_tv.setText(Item.getDate());
+                document_uid= Item.getDocumentuid();
                 // 예시 URL 문자열
-                String imageUrl = data.getImage();
+                String imageUrl = Item.getImage();
                 if (imageUrl != null) {
                     Glide.with(itemView.getContext()).load(imageUrl).into(user_write_iv);
                 }
         }
-        public void bind(LookForPost data) {
+        //LookForPost객체 바인딩 함수
+        public void bind(LookForPost Item) {
             // 데이터를 화면의 뷰에 바인딩하는 작업 수행
-            user_write_tv.setText(data.getName());
-            user_write_date_tv.setText(data.getDate());
-            document_uid= data.getDocumentuid();
+            user_write_tv.setText(Item.getName());
+            user_write_date_tv.setText(Item.getDate());
+            document_uid= Item.getDocumentuid();
             // 예시 URL 문자열
-            String imageUrl = data.getImage();
+            String imageUrl = Item.getImage();
             if (imageUrl != null) {
                 Glide.with(itemView.getContext()).load(imageUrl).into(user_write_iv);
             }
