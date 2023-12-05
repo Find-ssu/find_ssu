@@ -3,21 +3,17 @@ package com.example.find_ssu.Mypage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.find_ssu.Find.FindPost;
-import com.example.find_ssu.Find.FindPostViewHolder;
 import com.example.find_ssu.LookFor.LookForPost;
-import com.example.find_ssu.Main.MainActivity;
 import com.example.find_ssu.R;
 import com.example.find_ssu.databinding.ActivityUserWriteBinding;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
@@ -34,7 +30,6 @@ import java.util.List;
 
 public class UserWriteActivity<T> extends AppCompatActivity {
     ActivityUserWriteBinding binding;
-    private FirestorePagingAdapter<FindPost, FindPostViewHolder> adapter;
     private FirebaseFirestore db;
     private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
