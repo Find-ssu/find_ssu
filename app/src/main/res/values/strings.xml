@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Find_ssu</string>
+    <string name="app_name">찾아가ssu</string>
     <string name="membership_tv"><u>회원가입</u></string>
     <string name="title_activity_maps">MapsActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
