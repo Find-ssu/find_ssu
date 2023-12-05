@@ -203,6 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             intent.putExtra("more", findPost.getMore());
                             intent.putExtra("image", findPost.getImage());
                             intent.putExtra("uid",findPost.getUid());
+                            intent.putExtra("documentuid",findPost.getDocumentuid());
 
                             startActivity(intent);
                         }
