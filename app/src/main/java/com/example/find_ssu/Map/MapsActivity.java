@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -265,23 +266,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String name=document.getString("name");
-                                String location=document.getString("location");
-                                String location_detail=document.getString("location_detail");
-                                String date=document.getString("date");
-                                String more=document.getString("more");
-                                String image=document.getString("image");
-                                String documentuid=document.getString("documentuid");
+                                String name = document.getString("name");
+                                String location = document.getString("location");
+                                String location_detail = document.getString("location_detail");
+                                String date = document.getString("date");
+                                String more = document.getString("more");
+                                String image = document.getString("image");
+                                String documentuid = document.getString("documentuid");
                                 String uid = document.getString("uid");
 
-                                FindPost findPost=new FindPost(name,location,location_detail, date, more, image,documentuid,uid);
+                                FindPost findPost = new FindPost(name, location, location_detail, date, more, image, documentuid, uid);
 
                                 findpost_map_info = findViewById(R.id.map_info_rv);
                                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                                 findpost_map_info.setLayoutManager(layoutManager);
 
                                 findpost_map_info.setAdapter(adapter);
-                                adapter = new MapAdapter(MapsActivity.this,list);
+                                adapter = new MapAdapter(MapsActivity.this, list);
                                 adapter.addItem(findPost);
                             }
                         } else {
