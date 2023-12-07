@@ -30,7 +30,7 @@
             android:id="@+id/home_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="분실문 센터 물품보관"
+            android:text="분실물 센터 물품보관"
             android:textColor="@color/blue"
             android:fontFamily="@font/pretendard_extra_bold"
             android:textSize="25sp"
