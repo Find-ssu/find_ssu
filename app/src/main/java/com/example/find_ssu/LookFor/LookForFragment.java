@@ -63,6 +63,8 @@ public class LookForFragment extends Fragment {
                 fragmentTransaction.replace(R.id.home_navi, LookForClickFragment.newInstance(lookForPost));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+                look_for_search_word_et.setText("");
             }
         });
 
@@ -88,6 +90,8 @@ public class LookForFragment extends Fragment {
                 // 액티비티 전환
                 Intent intent = new Intent(requireContext(), LookForFabClickActivity.class);
                 startActivity(intent);
+
+                look_for_search_word_et.setText("");
             }
         });
 

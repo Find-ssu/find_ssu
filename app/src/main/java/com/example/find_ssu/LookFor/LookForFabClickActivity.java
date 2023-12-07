@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.find_ssu.DatePickerFragment;
+import com.example.find_ssu.Find.FindFabClickActivity;
 import com.example.find_ssu.Main.MainActivity;
 import com.example.find_ssu.R;
 import com.example.find_ssu.databinding.ActivityLookForFabClickBinding;
@@ -81,9 +82,7 @@ public class LookForFabClickActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        onBackPressed();
-//                        Intent intent = new Intent(LookForFabClickActivity.this, MainActivity.class);
-//                        startActivity(intent);
+                        finish();
                     }
                 });
 
@@ -119,6 +118,34 @@ public class LookForFabClickActivity extends AppCompatActivity {
                 Log.d(TAG,"이미지업로드 클릭리스너");
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LookForFabClickActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog, null);
+        Button cancelButton = dialogView.findViewById(R.id.dialog_cancel_btn);
+        Button okayButton = dialogView.findViewById(R.id.dialog_okay_btn);
+
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                LookForFabClickActivity.super.onBackPressed();
+            }
+        });
+
+        dialog.show();
     }
 
     //Cloud Firestore 인스턴스 초기화

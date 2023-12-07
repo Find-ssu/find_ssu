@@ -55,6 +55,8 @@ public class HomeFragment extends Fragment {
                 fragmentTransaction.replace(R.id.home_navi, HomeClickFragment.newInstance(homePost));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+                home_search_word_et.setText("");
             }
         });
     }

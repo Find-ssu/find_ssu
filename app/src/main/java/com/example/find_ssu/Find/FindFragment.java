@@ -63,6 +63,8 @@ public class FindFragment extends Fragment {
                 fragmentTransaction.replace(R.id.home_navi, FindClickFragment.newInstance(findPost));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+                find_search_word_et.setText("");
             }
         });
 
@@ -88,6 +90,8 @@ public class FindFragment extends Fragment {
                 // 액티비티 전환
                 Intent intent = new Intent(requireContext(), FindFabClickActivity.class);
                 startActivity(intent);
+
+                find_search_word_et.setText("");
             }
         });
 
@@ -116,6 +120,8 @@ public class FindFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(requireActivity(), MapsActivity.class);
                 startActivity(intent);
+
+                find_search_word_et.setText("");
             }
         });
 
