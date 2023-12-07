@@ -92,22 +92,6 @@ public class ChatActivity extends AppCompatActivity {
                                 finish();
                             }else {
                                 addDataFromCustomObject(uid1, uid2, chatroom, name, where, documentId);
-                                db.collection("user")
-                                        .whereEqualTo("status", "offline")
-                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onEvent(@Nullable QuerySnapshot value,
-                                                                @Nullable FirebaseFirestoreException error) {
-                                                for (QueryDocumentSnapshot document : value){
-                                                    Log.d("am", "아무거나");
-                                                    if(document.equals(uid1)){
-                                                        String token = document.getString("token");
-                                                        Log.d("token",token);
-                                                        sendPushNotificationToUser(token);
-                                                    }
-                                                }
-                                            }
-                                        });
                                 finish();
                             }
                         } else {
@@ -159,52 +143,4 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
     }
-    private void sendPushNotificationToUser(String userToken) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // FCM POST 요청 URL
-                    URL url = new URL("https://fcm.googleapis.com/fcm/send");
-
-                    // HttpURLConnection 객체 생성
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    // POST 요청 설정
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Authorization", "key=" + "BOH5Zwr1vm2-Obc1A53mpheVeCbcymsYyekp9V2KGV5wK4F14iDfvkO3vZNgqVZ5QVZKL35C9gboav76QebZLec"); // 여기에 FCM 서버 키를 넣어주세요.
-                    conn.setRequestProperty("Content-Type", "application/json");
-
-                    // JSON 메시지 작성
-                    JSONObject message = new JSONObject();
-                    message.put("to", userToken);
-                    message.put("priority", "high");
-
-                    JSONObject notification = new JSONObject();
-                    notification.put("title", "New message");
-                    notification.put("body", "You have a new message.");
-
-                    message.put("notification", notification);
-
-                    conn.setDoOutput(true);
-
-                    // 메시지 전송
-                    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                    wr.writeBytes(message.toString());
-                    wr.flush();
-                    wr.close();
-
-                    int responseCode = conn.getResponseCode();
-                    Log.d("Response Code", "ResponseCode: " + responseCode);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
-    }
-
-
 }

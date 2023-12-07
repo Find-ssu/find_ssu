@@ -10,6 +10,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.example.find_ssu.Chat.ChatActivity;
 import com.example.find_ssu.databinding.FragmentFindClickBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class FindClickActivity extends AppCompatActivity {
     static String name;
@@ -27,6 +28,23 @@ public class FindClickActivity extends AppCompatActivity {
         FragmentFindClickBinding binding = FragmentFindClickBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            name = extras.getString("name");
+            location = extras.getString("location");
+            location_detail = extras.getString("location_detail");
+            date = extras.getString("date");
+            more = extras.getString("more");
+            image = extras.getString("image");
+            uid = extras.getString("uid");
+            documentuid = extras.getString("documentuid");
+        }
+
+        int idx = documentuid.indexOf("_");
+        String writer = documentuid.substring(0,idx);
+        if(writer.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            binding.findChatBtn.setVisibility(View.INVISIBLE);
+        }
         binding.findClickBackIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,18 +63,6 @@ public class FindClickActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            name = extras.getString("name");
-            location = extras.getString("location");
-            location_detail = extras.getString("location_detail");
-            date = extras.getString("date");
-            more = extras.getString("more");
-            image = extras.getString("image");
-            uid = extras.getString("uid");
-            documentuid = extras.getString("documentuid");
-        }
 
         binding.findClickNameInputTv.setText(name);
         binding.findClickLocationInputTv.setText(location);
