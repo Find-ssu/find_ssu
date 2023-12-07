@@ -82,8 +82,6 @@ public class LookForFabClickActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         dialog.dismiss();
                         onBackPressed();
-//                        Intent intent = new Intent(LookForFabClickActivity.this, MainActivity.class);
-//                        startActivity(intent);
                     }
                 });
 
