@@ -60,13 +60,13 @@
                 android:id="@+id/look_for_fab_click_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="물품명"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@id/look_for_fab_click_warning_iv"
-                app:layout_constraintTop_toBottomOf="@id/look_for_fab_click_warning_iv" />
+                app:layout_constraintTop_toBottomOf="@id/look_for_fab_click_img_btn" />
 
             <EditText
                 android:id="@+id/look_for_fab_click_name_et"
@@ -208,7 +208,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@id/look_for_fab_click_more_et"
-                app:layout_constraintTop_toBottomOf="@id/look_for_fab_click_more_et" />
+                app:layout_constraintTop_toBottomOf="@id/look_for_fab_click_warning_iv" />
 
             <ImageButton
                 android:id="@+id/look_for_fab_click_img_btn"
@@ -231,8 +231,9 @@
                 android:text="업로드"
                 android:textColor="@color/white"
                 android:textSize="15sp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="@id/look_for_fab_click_more_et"
-                app:layout_constraintTop_toBottomOf="@id/look_for_fab_click_img_tv" />
+                app:layout_constraintTop_toBottomOf="@id/look_for_fab_click_more_et" />
 
             <ImageView
                 android:layout_width="match_parent"
