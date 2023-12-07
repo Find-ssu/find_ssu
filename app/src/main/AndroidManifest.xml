@@ -63,7 +63,7 @@
             android:exported="false" />
         <activity
             android:name=".Main.LoginActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Main.MainActivity"
             android:exported="false"
