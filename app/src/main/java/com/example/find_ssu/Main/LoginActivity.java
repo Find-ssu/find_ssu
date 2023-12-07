@@ -14,10 +14,19 @@ import android.widget.Toast;
 
 import com.example.find_ssu.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    static String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText emailEditText = binding.loginEmailEt;
         EditText passwordEditText = binding.loginPasswordEt;
         Button signInButton = binding.loginBtn;
+        db = FirebaseFirestore.getInstance();
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +82,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                       token = task.getResult();
+                    }
+                });
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -79,6 +104,25 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
+                            DocumentReference userRef = db.collection("user").document(user.getUid());
+                            userRef.set(new HashMap<String, Object>() {{
+                                        put("tocken", token);
+                                        put("status", "online");
+                                        put("lastSeen", null);
+                                    }})
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "User is online");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@org.checkerframework.checker.nullness.qual.NonNull Exception e) {
+                                            Log.e(TAG, "Error setting user online status", e);
+                                        }
+                                    });
                         } else {
                             // If sign in fails, display a message to the user.
                             //Log.w(TAG, "signInWithEmail:failure", task.getException());

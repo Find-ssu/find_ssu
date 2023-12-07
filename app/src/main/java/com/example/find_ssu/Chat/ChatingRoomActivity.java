@@ -31,6 +31,8 @@ public class ChatingRoomActivity extends AppCompatActivity {
     public ArrayList<ChatItem> list = new ArrayList<>();
     private ChatAdapter adapter = new ChatAdapter(this,list);
     RecyclerView chating;
+    private OnlineStatus onlineStatus;
+    String sender = FirebaseAuth.getInstance().getCurrentUser().getUid(); //현재사용자(보내는이)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,8 @@ public class ChatingRoomActivity extends AppCompatActivity {
         String where = intent.getStringExtra("where");
         String documentId = intent.getStringExtra("documentId");
 
-        String sender = FirebaseAuth.getInstance().getCurrentUser().getUid(); //현재사용자(보내는이)
+        onlineStatus = new OnlineStatus();
+        onlineStatus.setUserOnline(sender);//사용자가 들어왔을때 온라인으로 설정
 
         //받는 사람
         String RemoveSender = superdocumentId.replaceFirst(sender, "");
@@ -135,5 +138,12 @@ public class ChatingRoomActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 사용자가 채팅방을 나갈 때 오프라인 상태로 설정
+        onlineStatus.setUserOffline(sender);
+    }
 
 }
