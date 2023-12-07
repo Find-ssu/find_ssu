@@ -88,9 +88,7 @@ public class FindFabClickActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        onBackPressed();
-//                        Intent intent = new Intent(FindFabClickActivity.this, MainActivity.class);
-//                        startActivity(intent);
+                        finish();
                     }
                 });
 
@@ -139,6 +137,36 @@ public class FindFabClickActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(FindFabClickActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog, null);
+        Button cancelButton = dialogView.findViewById(R.id.dialog_cancel_btn);
+        Button okayButton = dialogView.findViewById(R.id.dialog_okay_btn);
+
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                FindFabClickActivity.super.onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
+
 
     //Cloud Firestore 인스턴스 초기화
     private void initializeCloudFirestore() {
@@ -234,7 +262,8 @@ public class FindFabClickActivity extends AppCompatActivity {
     private String getUidOfCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
-//달력띄우기
+
+    //달력띄우기
     private void showDatePickerDialog() {
         DatePickerFragment datePickerFragment = new DatePickerFragment();
         datePickerFragment.setOnDateSelectedListener(new DatePickerFragment.OnDateSelectedListener() {

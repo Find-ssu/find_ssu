@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.find_ssu.DatePickerFragment;
+import com.example.find_ssu.Find.FindFabClickActivity;
 import com.example.find_ssu.Main.MainActivity;
 import com.example.find_ssu.R;
 import com.example.find_ssu.databinding.ActivityLookForFabClickBinding;
@@ -81,7 +82,7 @@ public class LookForFabClickActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        onBackPressed();
+                        finish();
                     }
                 });
 
