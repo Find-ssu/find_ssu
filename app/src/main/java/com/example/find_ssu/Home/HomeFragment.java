@@ -23,9 +23,12 @@ import com.example.find_ssu.Find.FindPost;
 import com.example.find_ssu.R;
 import com.example.find_ssu.databinding.FragmentHomeBinding;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -129,11 +132,11 @@ public class HomeFragment extends Fragment {
     private void loadDataFromFirestore() {
         db.collection("InstagramData")
                 .orderBy("timestamp", Query.Direction.ASCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         list.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (QueryDocumentSnapshot document : value) {
                             String name = document.getString("name");
                             String location = document.getString("location");
                             String number = document.getString("number");
@@ -146,8 +149,6 @@ public class HomeFragment extends Fragment {
                             adapter.addItem(homePost);
                         }
                         adapter.notifyDataSetChanged();
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
     }
