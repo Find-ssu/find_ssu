@@ -134,21 +134,33 @@ public class HomeFragment extends Fragment {
                 .orderBy("timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        list.clear();
-                        for (QueryDocumentSnapshot document : value) {
-                            String name = document.getString("name");
-                            String location = document.getString("location");
-                            String number = document.getString("number");
-                            String date = document.getString("date");
-                            String img = document.getString("img");
-                            Number time = (Number) document.get("timestamp");
-                            String timestamp = String.valueOf(time);
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
 
-                            HomePost homePost = new HomePost(number, name, location, date, img, timestamp);
-                            adapter.addItem(homePost);
+                        if (error != null) {
+                            // Firestore 예외가 발생한 경우 처리
+                            Log.e(TAG, "Error getting data from Firestore", error);
+                            return;
                         }
-                        adapter.notifyDataSetChanged();
+                        if (value != null) {
+                            list.clear();
+                            for (QueryDocumentSnapshot document : value) {
+                                String name = document.getString("name");
+                                String location = document.getString("location");
+                                String number = document.getString("number");
+                                String date = document.getString("date");
+                                String img = document.getString("img");
+                                Number time = (Number) document.get("timestamp");
+                                String timestamp = String.valueOf(time);
+
+                                HomePost homePost = new HomePost(number, name, location, date, img, timestamp);
+                                adapter.addItem(homePost);
+                            }
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            // value가 null인 경우 처리
+                            Log.w(TAG, "Firestore data is null");
+                        }
                     }
                 });
     }
