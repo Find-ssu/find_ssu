@@ -87,7 +87,6 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-
         //사용자 이메일정보 띄우기
         TextView EmailView=view.findViewById(R.id.my_page_email_tv);
         EmailView.setText(email);

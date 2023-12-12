@@ -92,6 +92,7 @@ public class MembershipActivity extends AppCompatActivity {
             intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
 
             startActivity(intent);
+            MembershipActivity.this.finish();
         }
     }
 
