@@ -91,7 +91,7 @@ public class LookForFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), LookForFabClickActivity.class);
                 startActivity(intent);
 
-                look_for_search_word_et.setText("");
+                look_for_search_word_et.setText(null);
             }
         });
 

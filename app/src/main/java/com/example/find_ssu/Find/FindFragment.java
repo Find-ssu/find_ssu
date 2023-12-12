@@ -91,7 +91,7 @@ public class FindFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), FindFabClickActivity.class);
                 startActivity(intent);
 
-                find_search_word_et.setText("");
+                find_search_word_et.setText(null);
             }
         });
 
