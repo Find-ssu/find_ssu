@@ -79,13 +79,7 @@ dependencies {
     implementation ("com.firebaseui:firebase-ui-storage:8.0.2")
     // For @GlideModule
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore")
-    // Declare the dependency for the Cloud Firestore library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-        //implementation("com.google.firebase:firebase-firestore")
-
-    // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     // FirebaseUI for Cloud Firestore
     implementation ("com.firebaseui:firebase-ui-firestore:8.0.0")

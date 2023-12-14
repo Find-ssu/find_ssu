@@ -59,7 +59,6 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                             UserwriteList.add((T) Item);
                         }
                         Collections.reverse(UserwriteList);
-                        // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
                         displayDataInRecyclerView(UserwriteList);
                     }
                 });
@@ -88,7 +87,6 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                             UserwriteList.add((T) Item);
                         }
                         Collections.reverse(UserwriteList);
-                        // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
                         displayDataInRecyclerView(UserwriteList);
                     }
                 });
@@ -112,7 +110,6 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                             UserwriteList.add((T) Item);
                         }
                         Collections.reverse(UserwriteList);
-                        // 데이터를 받아온 후에 리스트로 관리하고 리사이클러뷰에 표시할 수 있는 작업을 수행합니다.
                         displayDataInRecyclerView(UserwriteList);
                     }
                 });
