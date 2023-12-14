@@ -64,7 +64,7 @@ public class FindFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
-                find_search_word_et.setText("");
+                //find_search_word_et.setText("");
             }
         });
 
@@ -91,7 +91,7 @@ public class FindFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), FindFabClickActivity.class);
                 startActivity(intent);
 
-                find_search_word_et.setText(null);
+                //find_search_word_et.setText(null);
             }
         });
 
@@ -121,7 +121,7 @@ public class FindFragment extends Fragment {
                 Intent intent = new Intent(requireActivity(), MapsActivity.class);
                 startActivity(intent);
 
-                find_search_word_et.setText("");
+                //find_search_word_et.setText("");
             }
         });
 

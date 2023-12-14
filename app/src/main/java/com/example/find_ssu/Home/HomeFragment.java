@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
-                home_search_word_et.setText(null);
+                //home_search_word_et.setText(null);
             }
         });
     }
