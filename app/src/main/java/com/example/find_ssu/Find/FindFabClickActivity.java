@@ -209,7 +209,6 @@ public class FindFabClickActivity extends AppCompatActivity {
             uploadImageAndGetData(selectedImageUri);
         }else if (data == null && data.getData() == null)
             Toast.makeText(FindFabClickActivity.this, "선택된 이미지 없음", Toast.LENGTH_SHORT).show();
-
     }
 //스토리지 이미지 업로드&image Uri반환 함수
     public void uploadImageAndGetData(Uri imageUri) {

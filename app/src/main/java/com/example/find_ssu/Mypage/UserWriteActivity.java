@@ -42,7 +42,12 @@ public class UserWriteActivity<T> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityUserWriteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         initializeCloudFirestore();
+        ImageButton backButton = binding.userWriteClickBackIv;
+        TextView find=binding.userWriteFind;
+        TextView lookfor=binding.userWriteLookfor;
+
         db.collection("FindPost").whereEqualTo("uid",uid)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -58,17 +63,15 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                         displayDataInRecyclerView(UserwriteList);
                     }
                 });
-
-        ImageButton backButton = binding.userWriteClickBackIv;
-
+        //백버튼 클릭리스너
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        TextView find=binding.userWriteFind;
-        TextView lookfor=binding.userWriteLookfor;
+
+        //찾아가세요 리스트
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +94,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
                 });
             }
         });
-
+        //찾아요 리스트
         lookfor.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -116,6 +119,7 @@ public class UserWriteActivity<T> extends AppCompatActivity {
             }
         });
     }
+    //리사이클러뷰 어뎁터 연결
     private void displayDataInRecyclerView(List<T> UserwriteList) {
         RecyclerView recyclerView = binding.userwriteRv;
         UserwriteAdapter adapter = new UserwriteAdapter(UserwriteList,this);

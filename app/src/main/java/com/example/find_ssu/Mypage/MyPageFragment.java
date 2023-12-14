@@ -39,13 +39,11 @@ public class MyPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
-
-
         TextView logoutButton = view.findViewById(R.id.my_page_logout_tv);
         TextView writeListButton = view.findViewById(R.id.my_page_write_list_tv);
         TextView chatBtn = view.findViewById((R.id.my_page_chat_tv));
         TextView instagram = view.findViewById(R.id.my_page_instagram);
-
+        //인스타그램 링크 연결
         Linkify.TransformFilter linktest = new Linkify.TransformFilter() {
             @Override
             public String transformUrl(Matcher match, String url) {
@@ -55,21 +53,18 @@ public class MyPageFragment extends Fragment {
         Pattern pattern = Pattern.compile("@sainpae_find");
         Linkify.addLinks(instagram, pattern, "https://www.instagram.com/sainpae_find/", null, linktest);
 
+        //로그아웃버튼 클릭리스너
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //파이어베이스 로그아웃 후 액티비티 종료
-//                Intent intent = new Intent(requireContext(), LoginActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
                 signOut();
                 getActivity().finish();
 
             }
         });
 
-
-
+        //쪽지함 버튼 클릭리스너
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,11 +72,10 @@ public class MyPageFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        //내가 쓴 글 목록 클릭리스너
         writeListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 화면 전환을 위한 액티비티 객체 생성
                 Intent intent = new Intent(getActivity(), UserWriteActivity.class);
                 startActivity(intent);
             }

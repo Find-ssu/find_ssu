@@ -53,20 +53,23 @@ public class LoginActivity extends AppCompatActivity {
     private BeginSignInRequest signInRequest;
     private ActivityResultLauncher<IntentSenderRequest> oneTapUILauncher;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
-    static String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         configOneTapSignUpOrSignInClient();
         initFirebaseAuth();
+
         EditText emailEditText = binding.loginEmailEt;
         EditText passwordEditText = binding.loginPasswordEt;
         Button signInButton = binding.loginBtn;
-        db = FirebaseFirestore.getInstance();
+        TextView MembershipButton=binding.loginMembershipTv;
+        ImageButton google_login_Button=binding.loginGoogleBtn;
+
+        //로그인 버튼 클릭 리스너
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,33 +84,26 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
-        TextView MembershipButton=binding.loginMembershipTv;
+        //회원가입 버튼 클릭 리스너
         MembershipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(LoginActivity.this,MembershipActivity.class);
                 startActivity(intent);
-
             }
         });
-        ImageButton google_login_Button=binding.loginGoogleBtn;
+        //구글로그인 버튼 클릭 리스너
         google_login_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 googlesignIn();
             }
         });
-
-
-
     }
     @Override
     protected void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         if (currentUser != null) {
             Log.d(TAG, "이미 로그인 했음");
             updateUI(currentUser); // Go to MainActivity
@@ -115,16 +111,15 @@ public class LoginActivity extends AppCompatActivity {
             Log.d(TAG, "아직 로그인 안했음");
         }
     }
+    //Google One Tap
     private void configOneTapSignUpOrSignInClient() {
         oneTapClient = Identity.getSignInClient(this);
 
         signInRequest = BeginSignInRequest.builder()
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
-                        // Your server's client ID, not your Android client ID.
                         .setServerClientId(getString(R.string.default_web_client_id))
-                        //.setFilterByAuthorizedAccounts(true) // Only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(false) // Show all accounts on the device.
+                        .setFilterByAuthorizedAccounts(false)
                         .build())
                 .build();
 
@@ -135,20 +130,16 @@ public class LoginActivity extends AppCompatActivity {
                     SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(result.getData());
                     String idToken = credential.getGoogleIdToken();
                     if (idToken != null) {
-                        // Got an ID token from Google. Use it to authenticate
-                        // with Firebase.
                         AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
                         mAuth.signInWithCredential(firebaseCredential)
                                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
                                             Log.d(TAG, "signInWithCredential:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             updateUI(user);
                                         } else {
-                                            // If sign in fails, display a message to the user.
                                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                                             updateUI(null);
                                         }
@@ -161,26 +152,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Firebase Auth 초기화
     private void initFirebaseAuth() {
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
     }
-
+    //로그인
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
+                            Log.d(TAG, "로그인 성공");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Log.d(TAG, "signInWithEmail:failure");
+                            Log.d(TAG, "로그인 실패");
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
@@ -188,8 +175,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+    //구글 로그인
     private void googlesignIn(){
-    // check whether the user has any saved credentials for your app. -> onSuccess or onFailure
         oneTapClient.beginSignIn(signInRequest)
             .addOnSuccessListener(this, new OnSuccessListener<BeginSignInResult>() {
         @Override
@@ -202,8 +189,6 @@ public class LoginActivity extends AppCompatActivity {
             .addOnFailureListener(this, new OnFailureListener() {
         @Override
         public void onFailure(@NonNull Exception e) {
-            // No saved credentials found. Launch the One Tap sign-up flow, or
-            // do nothing and continue presenting the signed-out UI.
             Log.d(TAG, e.getLocalizedMessage());
         }
     });
@@ -212,7 +197,6 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
-
             startActivity(intent);
         }
     }

@@ -35,6 +35,7 @@ public class MembershipActivity extends AppCompatActivity {
         EditText passwordEditText = binding.membershipPasswordEt;
         EditText passwordcheckEditText = binding.membershipPasswordCheckEt;
         Button signUpButton = binding.membershipBtn;
+
         //회원가입버튼 클릭이벤트
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +61,8 @@ public class MembershipActivity extends AppCompatActivity {
             }
         });
     }
+    // Firebase Auth 초기화
     private void initFirebaseAuth() {
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
     }
     //파이어베이스 회원가입
@@ -71,13 +72,12 @@ public class MembershipActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            //회원가입 성공
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            //회원가입 실패
                             Log.d(TAG, "createUserWithEmail:failure");
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -90,11 +90,8 @@ public class MembershipActivity extends AppCompatActivity {
         if (user != null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("USER_PROFILE", "email: " + user.getEmail() + "\n" + "uid: " + user.getUid());
-
             startActivity(intent);
             MembershipActivity.this.finish();
         }
     }
-
-
 }

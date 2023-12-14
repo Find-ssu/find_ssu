@@ -40,8 +40,6 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
         this.UserwriteList = UserwriteList;
         this.context = context;
     }
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,7 +59,6 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
             holder.model=(LookForPost)Item;
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -153,9 +150,6 @@ public class UserwriteAdapter<T> extends RecyclerView.Adapter<UserwriteAdapter.V
                                         });
                             }
                             dialog.dismiss();
-//                            ((AppCompatActivity) view.getContext()).finish();
-//                            Intent intent = new Intent((AppCompatActivity)view.getContext(), UserWriteActivity.class);
-//                            context.startActivity(intent);
                         }
                     });
                     dialog.show();
