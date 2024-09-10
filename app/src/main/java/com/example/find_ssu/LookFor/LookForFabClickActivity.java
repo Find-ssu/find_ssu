@@ -120,34 +120,6 @@ public class LookForFabClickActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LookForFabClickActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog, null);
-        Button cancelButton = dialogView.findViewById(R.id.dialog_cancel_btn);
-        Button okayButton = dialogView.findViewById(R.id.dialog_okay_btn);
-
-        builder.setView(dialogView);
-        AlertDialog dialog = builder.create();
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        okayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                LookForFabClickActivity.super.onBackPressed();
-            }
-        });
-
-        dialog.show();
-    }
-
     //Cloud Firestore 인스턴스 초기화
     private void initializeCloudFirestore() {
         db = FirebaseFirestore.getInstance();
